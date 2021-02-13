@@ -1,0 +1,209 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head><title>Main</title></head>
+<body>
+<main th:id="${'mainData'}" class="rhyzz" th:fragment="main">
+    <div class="rhyzz-wrapper">
+        <div class="rhyzz-bootstrap">
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{js/jquery-ui.min.js}"></script>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{repeatable-fields/js/repeatable-fields.js?version=1.5}"></script>
+            <p>
+                <a href="https://github.com/Rhyzz/repeatable-fields"
+                   target="_blank" class="btn btn-default">Lae algne kood alla</a>
+            </p>
+
+            <form name="main_data" id="main_data" method="post">
+
+                <label>
+                    <h4>Peatabeli kirje - see on alati nähtav</h4>
+                    <input type="text" name="name"
+                                style="width: 816px; color: #FFE697; background-color: Teal; font-weight: bold; font-size: large; font-family: Verdana, Arial, Sans-Serif; height: 56px"/>
+                </label>
+
+                <div class="repeat">
+                    <h4>Üksik väli - esimene on vaikimisi nähtav</h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="10%" colspan="4"><span
+                                    class="add btn btn-success">Lisa</span></td>
+                        </tr>
+                        </thead>
+                        <tbody class="container">
+                        <tr class="template row">
+                            <td width="40%"><span class="move btn btn-info">&#x2195</span>
+                                <span class="move-up btn btn-info">&#x2191</span> <input
+                                        type="text" class="move-steps" size="1" value="1"/> <span
+                                        class="move-down btn btn-info">&#x2193</span></td>
+                            <td width="10%">locations</td>
+                            <td width="40%"><input type="text"
+                                                   name="locations[{{row-count-placeholder}}][name]"
+                                                   class="form-control"/></td>
+                            <td width="10%"><span class="remove btn btn-danger">Eemalda</span></td>
+                        </tr>
+                        <tr class="row">
+                            <td width="40%"><span class="move btn btn-info">&#x2195</span>
+                                <span class="move-up btn btn-info">&#x2191</span> <input
+                                        type="text" class="move-steps" size="1" value="1"/> <span
+                                        class="move-down btn btn-info">&#x2193</span></td>
+                            <td width="10%">locations</td>
+                            <td width="40%"><input type="text"
+                                                   name="locations[0][name]" class="form-control"/></td>
+                            <td width="10%"><span class="remove btn btn-danger">Eemalda</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <h4>Väljarühm, mille kaks rida on vaikimisi nähtavad ja
+                        eeltäidetud</h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="10%" colspan="3"><span
+                                    class="add btn btn-success">Lisa</span></td>
+                        </tr>
+                        </thead>
+                        <tbody class="container">
+                        <tr class="template row">
+                            <td width="40%"><span class="move btn btn-info">&#x2195</span>
+                                <span class="move-up btn btn-info">&#x2191</span> <input
+                                        type="text" class="move-steps" size="1" value="1"/> <span
+                                        class="move-down btn btn-info">&#x2193</span></td>
+                            <td width="80%">
+                                <dl>
+                                    <dt>URL</dt>
+                                    <dd>
+                                        <input type="text"
+                                               name="groupedEntries[{{row-count-placeholder}}][url]"
+                                               class="form-control"/>
+                                    </dd>
+                                    <dt>Pealkiri</dt>
+                                    <dd>
+                                        <input type="text"
+                                               name="groupedEntries[{{row-count-placeholder}}][title]"
+                                               class="form-control"/>
+                                    </dd>
+                                    <dt>Pilt</dt>
+                                    <dd>
+                                        <input type="text"
+                                               name="groupedEntries[{{row-count-placeholder}}][image]"
+                                               class="form-control"/>
+                                    </dd>
+                                </dl>
+                            </td>
+                            <td width="10%"><span class="remove btn btn-danger">Eemalda</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <h4>Põimitud andmerühm (ühe rühma sees on teine rühm),
+                        vaikimisi peidetud</h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="10%" colspan="3"><span
+                                    class="add btn btn-success">Lisa</span></td>
+                        </tr>
+                        </thead>
+                        <tbody class="container">
+                        <tr class="template row">
+                            <td width="40%"><span class="move btn btn-info">&#x2195</span>
+                                <span class="move-up btn btn-info">&#x2191</span> <input
+                                        type="text" class="move-steps" size="1" value="1"/> <span
+                                        class="move-down btn btn-info">&#x2193</span></td>
+                            <td width="80%">
+                                <dl>
+                                    <dt>Pealkiri</dt>
+                                    <dd>
+                                        <input type="text"
+                                               name="collections[{{row-count-placeholder}}][heading]"
+                                               class="form-control"/>
+                                    </dd>
+                                </dl>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <td width="10%" colspan="3"><span
+                                                class="add btn btn-success">Lisa</span></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="container">
+                                    <tr class="template row">
+                                        <td width="10%"><span class="move btn btn-info">&#x2195</span>
+                                            <span class="move-up btn btn-info">&#x2191</span> <input
+                                                    type="text" class="move-steps" size="1" value="1"/> <span
+                                                    class="move-down btn btn-info">&#x2193</span></td>
+                                        <td width="80%">
+                                            <dl>
+                                                <dt>Nimetus</dt>
+                                                <dd>
+                                                    <input type="text"
+                                                           name="collections[{{row-count-placeholder}}][items][{{row-count-placeholder}}][title]"
+                                                           class="form-control"/>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Aasta</dt>
+                                                <dd>
+                                                    <input type="text"
+                                                           name="collections[{{row-count-placeholder}}][items][{{row-count-placeholder}}][year]"
+                                                           class="form-control"/>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Kirjeldus</dt>
+                                                <dd>
+																<textarea
+                                                                        name="collections[{{row-count-placeholder}}][items][{{row-count-placeholder}}][description]"
+                                                                        class="form-control"></textarea>
+                                                </dd>
+                                            </dl>
+                                        </td>
+                                        <td width="10%"><span class="remove btn btn-danger">Eemalda</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="10%"><span class="remove btn btn-danger">Eemalda</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>Sisesta andmed, kui kõik on valmis.</p>
+                <input type="submit" id="submitform" class="btn btn-primary"
+                       value="Sisesta"/>
+            </form>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+				jQuery(function() {
+					jQuery('.repeat').each(function() {
+						jQuery(this).repeatable_fields({
+							wrapper: 'table',
+							container: 'tbody',
+						});
+					});
+				});
+
+            </script>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                /**
+                 * Retrieves input data from a form and returns it as a JSON object.
+                 */
+
+                $("#main_data").submit(function(event){
+                    event.preventDefault();
+                    var formHTML = document.getElementById('main_data');
+                    var data = $('#main_data').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
+                    var jsonData = JSON.stringify(data);
+                    console.log("Data: " + jsonData);
+                    $.post("/multidimension/api/mainDatas/add", jsonData, function(data){
+                    document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</main>
+</body>
+</html>

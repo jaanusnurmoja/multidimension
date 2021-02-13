@@ -1,0 +1,150 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head><title>Header</title></head>
+<body>
+<header class="rhyzz" th:fragment="header">
+    <div class="rhyzz-wrapper" style="vertical-align: top">
+        <div style="background-color:white;width:fit-content;height:min-content;margin-left:-25px;padding:0 10px">
+            <a href="https://www.nurmoja.net.ee"><img th:src="@{https://www.nurmoja.net.ee/nurmoja_net_ee.png}" alt="nurmmoja.net.ee" height="40" style="margin-bottom:15px"></a>
+            <a href="https://www.rhyzz.com/"><img th:src="@{images/rhyzz.png}" alt="Rhyzz" height="40" style="margin-bottom:15px"></a>
+        </div>
+        <nav class="rhyzz-navigation">
+            <ul>
+                <li class="btn" style="background-color: orange"> <button id="formdatamode" style="background-color: transparent; padding:10px">TOGGLE FORMS
+            </button>
+                </li>
+                <li><a href="/multidimension">Home</a></li>
+                <li>
+                    <span>Author's code resources</span>
+                    <ul>
+                        <li><a href="https://github.com/jaanusnurmoja">in Github</a></li>
+                        <li><a href="https://gitlab.com/jaanusnurmoja">In Gitlab</a></li>
+                    </ul>
+                </li>
+                <li><span>Collaboration</span>
+                    <ul>
+                        <li>
+                            <span>Fabrik - content builder for Joomla!</span>
+                            <ul>
+                                <li><a href="https://www.fabrikar.com">Fabrik website</a></li>
+                                <li><a href="https://github.com/Fabrik/fabrik">Fabrik in Github</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>MuseScore - music notation</span>
+                            <ul>
+                                <li><a href="https://musescore.org">MuseScore</a></li>
+                                <li><a href="https://www.transifex.com/musescore/musescore/">Translation project</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>Misc personal and other stuff</span>
+                    <ul>
+                        <li><a href="https://jaanus.nurmoja.net.ee">Peegeldaja (blog)</a></li>
+                        <li><a href="https://foto.nurmoja.net.ee">Pildipesa (photos)</a></li>
+                        <li><a href="https://www.emic.ee/jaanus-nurmoja">Estonian Music Information Centre (music)</a></li>
+                        <li><a href="https://www.youtube.com/channel/UCuEFp2FGXg122GnHWESgwHA">Youtube (music)</a></li>
+                        <li><a href="https://soundcloud.com/jaanus-nurmoja/">SoundCloud</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>Rhyzz</span>
+                    <ul>
+                        <li><a href="https://www.rhyzz.com/">Home</a></li>
+                        <li>
+                            <a href="https://www.rhyzz.com/#services">Services</a>
+                            <ul>
+                                <li><a href="https://www.rhyzz.com/wordpress-malware-removal.html">WordPress Malware Removal</a></li>
+                                <li><a href="https://www.rhyzz.com/psd-to-wordpress.html">PSD to WordPress</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="https://www.rhyzz.com/#portfolio">Portfolio</a></li>
+                        <li>
+                            <span>Plugins</span>
+                            <ul>
+                                <li>
+                                    <span>WordPress</span>
+                                    <ul>
+                                        <li><a href="https://www.rhyzz.com/fields-framework.html">Fields Framework</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>jQuery</span>
+                                    <ul>
+                                        <li><a href="https://www.rhyzz.com/repeatable-fields.html">Repeatable Fields</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Themes</span>
+                            <ul>
+                                <li>
+                                    <span>WordPress</span>
+                                    <ul>
+                                        <li><a href="https://www.rhyzz.com/wpcrest.html">WPCrest</a></li>
+                                        <li><a href="https://www.rhyzz.com/wpcrest-extended.html">WPCrest - Extended</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Tools</span>
+                            <ul>
+                                <li><a href="https://www.rhyzz.com/strong-random-password-generator.html">Strong Random Password Generator</a></li>
+                                <li><a href="https://www.rhyzz.com/iota-seed-generator.html">IOTA Seed Generator</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="https://www.rhyzz.com/#about">About</a></li>
+                        <li><a href="https://www.rhyzz.com/#contact">Contact</a></li>
+                        <li><a href="https://www.facebook.com/pages/Rhyzz/328587983853273">Facebook</a></li>
+                        <li><a href="https://www.linkedin.com/company/rhyzz">LinkedIn</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>About</span>
+                    <ul>
+                        <li><div style="white-space:normal;background-color:orange;color:black;text-transform:none;line-height:1.2;font-size:13px">
+                            This is a web app for multidimensional data management, built on and inspired by Rhyzz repeatable fields jQuery nested form plugin. Written in php but a java version is under development as well. This one is also in development state as some features are far from sufficient state (if not missing at all).
+                        </div></li>
+                        <li><div style="white-space:normal;background-color:orange;color:black;text-transform:none;line-height:1.2;font-size:13px">
+                            Jaanus Nurmoja is an amateur web developer / programmer who hopefully moves towards professional programmer life. His original profession is journalist but his current activities are mostly related to music.
+                        </div> </li>
+                    </ul>
+                </li>
+                <li><span>Contact</span>
+                    <ul><li>
+                        <div style="white-space:normal;background-color:orange;color:black;text-transform:none;line-height:1.5;font-size:13px;margin-left:-80px">
+                            jaanus.nurmoja@gmail.com
+                        </div></li></ul>
+                </li>
+            </ul>
+        </nav>
+        <ul class="rhyzz-networking">
+            <li>LOGIN WITH: </li>
+            <li><button class="btn btn-warning" style="margin-top:-2px;" onclick="window.location.href='user/login'">Estonian ID CARD</button></li>
+            <li><button class="rhyzz-linkedin btn btn-warning" style="margin-top:-2px;" onclick="window.location.href='user/social/linkedin'"><img th:src="@{images/linkedin_single.png}" style="max-height:16px"><span style="vertical-align:top; padding-left:2px">LINKEDIN</span>
+            </button></li>
+
+            <li><button class="btn btn-warning" style="margin-top:-2px;" onclick="window.location.href='https://www.facebook.com/v3.2/dialog/oauth?client_id=682681075600981&amp;state=b64fb85266fd230a526aaa0fe20c083f&amp;response_type=code&amp;sdk=php-sdk-5.7.0&amp;redirect_uri=https%3A%2F%2Ftest.nurmoja.net.ee%2Frepeat%2Fuser%2Fsocial%2Ffacebook%2Ffb-callback.php&amp;scope='"><img th:src="@{https://test.nurmoja.net.ee/repeat/images/facebook-icon.png}" style="max-height:16px"><span style="vertical-align:top; padding-left:2px">FACEBOOK</span>
+            </button></li>
+            <li><button id="oa_social_login_link" class="btn btn-warning" style="margin-top:-2px;"><img src="https://secure.oneallcdn.com/img/favicon.png" style="max-height:16px"><span style="vertical-align:top; padding-left:2px">OTHER</span></button>
+                <script type="text/javascript">
+                    var _oneall = _oneall || [];
+                    _oneall.push(['social_login', 'set_callback_uri', 'https://test.nurmoja.net.ee/repeat/user/social/oneall/callback.php']);
+                    _oneall.push(['social_login', 'set_providers', ['github', 'google', 'windowslive', 'openid', 'twitter']]);
+                    _oneall.push(['social_login', 'set_custom_css_uri', 'https://secure.oneallcdn.com/css/api/themes/beveled_connect_w208_h30_wc_v1.css']);
+                    _oneall.push(['social_login', 'set_grid_sizes', [3,]]);
+                    _oneall.push(['social_login', 'attach_onclick_popup_ui', 'oa_social_login_link']);
+                </script>
+            <li><button class="btn btn-warning" style="margin-top:-2px;" onclick="window.location.href='https://github.com/Rhyzz/repeatable-fields'">"Blank" code (Github)</button></li>
+            <li class="rhyzz-facebook"><a href="https://www.facebook.com/jaanus.nurmoja">Facebook</a></li>
+            <li class="rhyzz-linkedin"><a href="https://www.linkedin.com/in/jaanus-nurmoja-397bb836/">LinkedIn</a></li>
+        </ul>
+    </div>
+</header>
+</body>
+</html>
+

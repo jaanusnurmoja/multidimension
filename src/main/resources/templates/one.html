@@ -1,0 +1,311 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head><title>Main</title></head>
+<body>
+<main th:id="${'onedata'}" class="rhyzz" th:fragment="one">
+    <div class="rhyzz-wrapper">
+        <div class="rhyzz-bootstrap">
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{js/jquery-ui.min.js}"></script>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{repeatable-fields/js/repeatable-fields.js?version=1.5}"></script>
+            <p>
+                <a href="https://github.com/Rhyzz/repeatable-fields"
+                   target="_blank" class="btn btn-default">Lae algne kood alla</a>
+            </p>
+
+            <form id="one" method="post" action="">
+                <div class="repeat">
+                    <dl id='' class='row'>
+                        <dt class="col-sm-2 none">One id</dt>
+                        <dd class="col-sm-10 none maindebug"></dd>
+                        <dt class="col-sm-2 default">One title</dt>
+                        <dd class="col-sm-10 default maindebug"><input type="text" name="title" class="form-control"
+                                                                       value=""/></dd>
+                    </dl>
+                    <h4>two</h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="10%" colspan="3"><span class="add btn btn-success btn-sm">Add</span></td>
+                        </tr>
+                        </thead>
+                        <tbody class="container ui-sortable" data-rf-row-count="1">
+                        <tr class="template row" style="display: none;">
+                            <td width="20%">
+                                <span class="move btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-sort"></span></span>
+                                <span class="move-up btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-arrow-up"></span></span>
+                                <input type="text" class="move-steps" size="1" value="1">
+                                <span class="move-down btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-arrow-down"></span></span>
+                            </td>
+                            <td width="70%">
+                                <dl id=twos.{{row-count-placeholder}}>
+                                    <dt class="col-sm-2 none childdebug">Two id</dt>
+                                    <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                 name="twos[{{row-count-placeholder}}][id]"
+                                                                                 value=""/></dd>
+                                    <dt class="col-sm-2 none childdebug">One_id</dt>
+                                    <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                 name="twos[{{row-count-placeholder}}][one_id]"
+                                                                                 value=""/></dd>
+                                    <dt class="col-sm-2 default childdebug">Two title</dt>
+                                    <dd class="col-sm-10 default childdebug"><input type="text"
+                                                                                    name="twos[{{row-count-placeholder}}][title]"
+                                                                                    class="form-control" value=""/></dd>
+                                    <dt class="col-sm-2 none childdebug">Two created</dt>
+                                    <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                 name="twos[{{row-count-placeholder}}][created]"
+                                                                                 value=""/></dd>
+                                    <dt class="col-sm-2 none childdebug">Two modified</dt>
+                                    <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                 name="twos[{{row-count-placeholder}}][modified]"
+                                                                                 value=""/></dd>
+                                    <dt class="col-sm-2"><h4>three</h4></dt>
+                                    <dd class="col-sm-10">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <td width="10%" colspan="3"><span
+                                                        class="add btn btn-success btn-sm">Add</span></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="container ui-sortable" data-rf-row-count="0">
+                                            <tr class="template row" style="display: none;">
+                                                <td width="20%">
+                                                    <span class="move btn btn-info btn-sm"><span
+                                                            class="glyphicon glyphicon-sort"></span></span>
+                                                    <span class="move-up btn btn-info btn-sm"><span
+                                                            class="glyphicon glyphicon-arrow-up"></span></span>
+                                                    <input type="text" class="move-steps" size="1" value="1">
+                                                    <span class="move-down btn btn-info btn-sm"><span
+                                                            class="glyphicon glyphicon-arrow-down"></span></span>
+                                                </td>
+                                                <td width="70%">
+                                                    <dl id="threes.{{row-count-placeholder}}">
+                                                        <dt class="col-sm-2 none childdebug">Three id</dt>
+                                                        <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                                     name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][id]"
+                                                                                                     value=""/></dd>
+                                                        <dt class="col-sm-2 none childdebug">Two_id</dt>
+                                                        <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                                     name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][two_id]"
+                                                                                                     value=""/></dd>
+                                                        <dt class="col-sm-2 default childdebug">Three title</dt>
+                                                        <dd class="col-sm-10 default childdebug"><input type="text"
+                                                                                                        name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][title]"
+                                                                                                        class="form-control"
+                                                                                                        value=""/></dd>
+                                                        <dt class="col-sm-2 none childdebug">Three created</dt>
+                                                        <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                                     name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][created]"
+                                                                                                     value=""/></dd>
+                                                        <dt class="col-sm-2 none childdebug">Three modified</dt>
+                                                        <dd class="col-sm-10 none childdebug"><input type="hidden"
+                                                                                                     name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][modified]"
+                                                                                                     value=""/></dd>
+                                                        <dt class="col-sm-2"><h4>four</h4></dt>
+                                                        <dd class="col-sm-10">
+                                                            <table class="table table-striped table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td width="10%" colspan="3"><span
+                                                                            class="add btn btn-success btn-sm">Add</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody class="container ui-sortable"
+                                                                       data-rf-row-count="0">
+                                                                <tr class="template row" style="display: none;">
+                                                                    <td width="20%">
+                                                                        <span class="move btn btn-info btn-sm"><span
+                                                                                class="glyphicon glyphicon-sort"></span></span>
+                                                                        <span class="move-up btn btn-info btn-sm"><span
+                                                                                class="glyphicon glyphicon-arrow-up"></span></span>
+                                                                        <input type="text" class="move-steps" size="1"
+                                                                               value="1">
+                                                                        <span class="move-down btn btn-info btn-sm"><span
+                                                                                class="glyphicon glyphicon-arrow-down"></span></span>
+                                                                    </td>
+                                                                    <td width="70%">
+                                                                        <dl id=fours.{{row-count-placeholder}}>
+                                                                            <dt class="col-sm-2 none childdebug">Four
+                                                                                id
+                                                                            </dt>
+                                                                            <dd class="col-sm-10 none childdebug"><input
+                                                                                    type="hidden"
+                                                                                    name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][id]"
+                                                                                    value=""/></dd>
+                                                                            <dt class="col-sm-2 none childdebug">
+                                                                                Three_id
+                                                                            </dt>
+                                                                            <dd class="col-sm-10 none childdebug"><input
+                                                                                    type="hidden"
+                                                                                    name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][three_id]"
+                                                                                    value=""/></dd>
+                                                                            <dt class="col-sm-2 default childdebug">Four
+                                                                                title
+                                                                            </dt>
+                                                                            <dd class="col-sm-10 default childdebug">
+                                                                                <input type="text"
+                                                                                       name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][title]"
+                                                                                       class="form-control" value=""/>
+                                                                            </dd>
+                                                                            <dt class="col-sm-2 none childdebug">Four
+                                                                                created
+                                                                            </dt>
+                                                                            <dd class="col-sm-10 none childdebug"><input
+                                                                                    type="hidden"
+                                                                                    name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][created]"
+                                                                                    value=""/></dd>
+                                                                            <dt class="col-sm-2 none childdebug">Four
+                                                                                modified
+                                                                            </dt>
+                                                                            <dd class="col-sm-10 none childdebug"><input
+                                                                                    type="hidden"
+                                                                                    name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][modified]"
+                                                                                    value=""/></dd>
+                                                                            <dt class="col-sm-2"><h4>five</h4></dt>
+                                                                            <dd class="col-sm-10">
+                                                                                <table class="table table-striped table-bordered">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <td width="10%" colspan="3">
+                                                                                            <span class="add btn btn-success btn-sm">Add</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody class="container ui-sortable"
+                                                                                           data-rf-row-count="0">
+                                                                                    <tr class="template row"
+                                                                                        style="display: none;">
+                                                                                        <td width="20%">
+                                                                                            <span class="move btn btn-info btn-sm"><span
+                                                                                                    class="glyphicon glyphicon-sort"></span></span>
+                                                                                            <span class="move-up btn btn-info btn-sm"><span
+                                                                                                    class="glyphicon glyphicon-arrow-up"></span></span>
+                                                                                            <input type="text"
+                                                                                                   class="move-steps"
+                                                                                                   size="1" value="1">
+                                                                                            <span class="move-down btn btn-info btn-sm"><span
+                                                                                                    class="glyphicon glyphicon-arrow-down"></span></span>
+                                                                                        </td>
+                                                                                        <td width="70%">
+                                                                                            <dl id=fives.{{row-count-placeholder}}>
+                                                                                                <dt class="col-sm-2 none childdebug">
+                                                                                                    Five id
+                                                                                                </dt>
+                                                                                                <dd class="col-sm-10 none childdebug">
+                                                                                                    <input type="hidden"
+                                                                                                           name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][fives][{{row-count-placeholder}}][id]"
+                                                                                                           value=""/>
+                                                                                                </dd>
+                                                                                                <dt class="col-sm-2 none childdebug">
+                                                                                                    Four_id
+                                                                                                </dt>
+                                                                                                <dd class="col-sm-10 none childdebug">
+                                                                                                    <input type="hidden"
+                                                                                                           name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][fives][{{row-count-placeholder}}][four_id]"
+                                                                                                           value=""/>
+                                                                                                </dd>
+                                                                                                <dt class="col-sm-2 default childdebug">
+                                                                                                    Five title
+                                                                                                </dt>
+                                                                                                <dd class="col-sm-10 default childdebug">
+                                                                                                    <input type="text"
+                                                                                                           name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][fives][{{row-count-placeholder}}][title]"
+                                                                                                           class="form-control"
+                                                                                                           value=""/>
+                                                                                                </dd>
+                                                                                                <dt class="col-sm-2 none childdebug">
+                                                                                                    Five created
+                                                                                                </dt>
+                                                                                                <dd class="col-sm-10 none childdebug">
+                                                                                                    <input type="hidden"
+                                                                                                           name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][fives][{{row-count-placeholder}}][created]"
+                                                                                                           value=""/>
+                                                                                                </dd>
+                                                                                                <dt class="col-sm-2 none childdebug">
+                                                                                                    Five modified
+                                                                                                </dt>
+                                                                                                <dd class="col-sm-10 none childdebug">
+                                                                                                    <input type="hidden"
+                                                                                                           name="twos[{{row-count-placeholder}}][threes][{{row-count-placeholder}}][fours][{{row-count-placeholder}}][fives][{{row-count-placeholder}}][modified]"
+                                                                                                           value=""/>
+                                                                                                </dd>
+                                                                                            </dl>
+                                                                                        </td>
+                                                                                        <td width="10%"><span
+                                                                                                class="remove btn btn-danger btn-sm">Remove</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </td>
+                                                                    <td width="10%"><span
+                                                                            class="remove btn btn-danger btn-sm">Remove</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </dd>
+                                                    </dl>
+                                                </td>
+                                                <td width="10%"><span class="remove btn btn-danger btn-sm">Remove</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </dd>
+                                </dl>
+                            </td>
+                            <td width="10%"><span class="remove btn btn-danger btn-sm">Remove</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <p>Submit this form to view the data.</p>
+                <div id="deleteIntro" class="alert alert-warning" role="alert" style="display:none">YOU ARE ABOUT TO
+                    DELETE SOME DATA:
+                </div>
+                <div id="delete" class="alert alert-warning" role="alert" style="display:none">
+                </div>
+                <div id="deleteOutro" class="alert alert-warning" role="alert" style="display:none">
+                    FORM SUBMISSION WILL PROCEED DELETION. IF THIS IS INTENTIONAL CLICK SUBMIT, OTHERWISE LEAVE OR
+                    RELOAD THE FORM.<p>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit"></form>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+				jQuery(function() {
+					jQuery('.repeat').each(function() {
+						jQuery(this).repeatable_fields({
+							wrapper: 'table',
+							container: 'tbody',
+						});
+					});
+				});
+
+
+            </script>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                /**
+                 * Retrieves input data from a form and returns it as a JSON object.
+                 */
+
+                $("#one").submit(function(event){
+                    event.preventDefault();
+                    var formHTML = document.getElementById('one');
+                    var data = $('#one').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
+                    var jsonData = JSON.stringify(data);
+                    console.log("Data: " + jsonData);
+                    $.post("/multidimension/api/ones/add", jsonData, function(data){
+                    document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+</main>
+</body>
+</html>
