@@ -5,9 +5,9 @@
 <body>
 <div class="container" th:fragment="posts">
 <h1 th:text="${title}"></h1>
-    <button th:class="${'ui-icon-bookmark'}"><a th:href="@{'/blog/create'}">Add new</a> </button>
-<div th:id="list" th:each="post: ${posts}">
-    <a th:href="@{'/blog/' + ${post.id}}" onclick="this.parentElement.setAttribute('th:replace', 'post::post')">
+    <button th:class="${'ui-icon-bookmark'}"><a th:href="@{'blog/posts/create'}">Add new</a> </button>
+<div th:each="post: ${posts}">
+    <a th:href="@{'/blog/posts/' + ${post.id}}">
         <h2 th:text="${post.getCreatedAt().getDayOfMonth()}
          + '.' + ${post.getCreatedAt().getMonth().getValue()}
          + '.' + ${post.getCreatedAt().getYear()}

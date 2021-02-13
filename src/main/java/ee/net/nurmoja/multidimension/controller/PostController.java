@@ -13,16 +13,16 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/blog")
+@RequestMapping("/blog/posts")
 public class PostController {
 
     final private BlogPostRepository service;
 
     //Get Only all posts
-    @GetMapping("")
+    @GetMapping("/all")
     ModelAndView getAllPosts(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("blog");
+        modelAndView.setViewName("posts");
         modelAndView.addObject("title", "All Posts: ");
         List<BlogPost> posts = service.findAll();
         modelAndView.addObject("posts", posts);
@@ -34,7 +34,7 @@ public class PostController {
     ModelAndView getPost(@PathVariable("id") Long postId){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("post");
-        modelAndView.addObject("title", "Post: ");
+        modelAndView.addObject("title", "Posts: ");
         BlogPost post = service.getOne(postId);
         modelAndView.addObject("post", post);
         return modelAndView;
@@ -49,7 +49,7 @@ public class PostController {
     @PostMapping("/create")
     RedirectView create(@ModelAttribute BlogPost blogPost){
         service.save(blogPost);
-        return new RedirectView("/blog");
+        return new RedirectView("/posts/all");
     }
 
 

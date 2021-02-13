@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "thisapp.author",
-      "type": "java.lang.String",
-      "description": "Description for thisapp.author."
-  }
-] }

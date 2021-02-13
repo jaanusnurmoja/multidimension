@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,4 +43,11 @@ public class MainData implements Serializable {
     @OneToMany(mappedBy = "mainData")
     private List<Collection> collections;
 
+    public List<List<?>> getChildren(MainData m) {
+        List<List<?>> children = new ArrayList<>();
+        children.add(this.getLocations());
+        children.add(this.getGroupedEntries());
+        children.add(this.getCollections());
+        return children;
+    }
 }

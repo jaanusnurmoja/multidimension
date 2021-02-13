@@ -1,17 +1,17 @@
 package ee.net.nurmoja.multidimension.model;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
-@Table(name = "blog_post")
 public class BlogPost {
-    private static final long serialVersionUID = 1L;
 
     @GeneratedValue
     @Id
@@ -19,8 +19,6 @@ public class BlogPost {
     private String title;
     private String text;
     private LocalDateTime createdAt;
-    @Value("${thisapp.author}")
     private String author;
-    @OneToMany(mappedBy = "blogPost")
-    private List<BlogContentOrderBy> blogContentOrderByList;
+
 }

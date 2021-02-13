@@ -27,6 +27,24 @@ public class One implements Serializable {
     @OneToMany(mappedBy = "one")
     private List<Two> twos;
 
+    public One() {
+    }
+
+    public One(One one) {
+        this.id = one.id;
+        this.title = one.title;
+        this.created = one.created;
+        this.modified = one.modified;
+        one.twos.forEach(t->t.setOne(one));
+        this.twos = one.twos;
+    }
+
+    public List<List<?>> getChildren(One one) {
+        List<List<?>> children = new ArrayList<>();
+        children.add(this.getTwos());
+        return children;
+    }
+
     public Integer getId() {
         return this.id;
     }

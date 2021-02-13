@@ -121,9 +121,7 @@
                    target="_blank" class="btn btn-default">Lae algne kood alla</a>
             </p>
 
-            <div id="blogposts" class="container"
-                 th:replace="posts::posts">
-                 </div>
+            <div id="blogposts" class="container"></div>
 
         </div>
     </div>
@@ -133,7 +131,7 @@
         th:src="@{./ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js}"
         data-cf-settings="86dc64a4e19322c20a32dff2-|49" defer="">
 </script>
-<!--<script>
+<script>
     $(document).ready(function(){
         $.getJSON("/multidimension/api/blogPosts", function(data){
             var blogpost = '';
@@ -145,7 +143,7 @@
         });
 
     });
-</script>-->
+</script>
 
 </body>
 </html>
