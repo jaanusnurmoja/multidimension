@@ -13,16 +13,16 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/blog/posts")
+@RequestMapping("/blog")
 public class PostController {
 
     final private BlogPostRepository service;
 
     //Get Only all posts
-    @GetMapping("/all")
+    @GetMapping("")
     ModelAndView getAllPosts(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("posts");
+        modelAndView.setViewName("blog");
         modelAndView.addObject("title", "All Posts: ");
         List<BlogPost> posts = service.findAll();
         modelAndView.addObject("posts", posts);
@@ -48,8 +48,8 @@ public class PostController {
 
     @PostMapping("/create")
     RedirectView create(@ModelAttribute BlogPost blogPost){
-        service.save(blogPost);
-        return new RedirectView("/posts/all");
+        BlogPost newPost = service.save(blogPost);
+        return new RedirectView("/" + newPost.getId());
     }
 
 
