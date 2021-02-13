@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: imports(pageTitle = 'Post')">
+</head>
+<body>
+<h1 th:text="${title}"></h1>
+    <h3 th:text="${post.title}"></h3>
+    <h4 th:text="${post.text}"></h4>
+<a th:href="@{'/posts/all'}">all posts</a>
+<div th:include="base :: jquery"></div>
+
+</body>
+</html>
