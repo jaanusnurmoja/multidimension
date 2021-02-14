@@ -298,7 +298,7 @@
                     var data = $('#one').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                     var jsonData = JSON.stringify(data);
                     console.log("Data: " + jsonData);
-                    $.post("/multidimension/api/ones/add", jsonData, function(data){
+                    $.post("/multidimension/data/api/ones/add", jsonData, function(data){
                     document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
                     });
                 });

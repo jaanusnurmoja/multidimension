@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/data/api")
 class MainDataController {
     private final MainDataRepository mainDataRepository;
     private final LocationRepository locationRepository;

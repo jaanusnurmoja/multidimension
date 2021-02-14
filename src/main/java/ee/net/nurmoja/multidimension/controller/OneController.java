@@ -11,7 +11,7 @@ import java.util.List;
 //import javax.ws.rs.client.Entity;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/data/api")
 class OneController {
 
 

@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +22,7 @@ public class BlogPost {
     private String text;
     private LocalDateTime createdAt;
     private String author;
+    @OneToMany(mappedBy = "blogPost")
+    private List<BlogContentOrderBy> blogContentOrderByList;
 
 }

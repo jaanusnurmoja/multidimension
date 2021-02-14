@@ -14,7 +14,7 @@
                    target="_blank" class="btn btn-default">Lae algne kood alla</a>
             </p>
 
-            <form name="main_data" id="main_data" method="post">
+            <form name="main_data" id="main_data" method="post" content="application/json">
 
                 <label>
                     <h4>Peatabeli kirje - see on alati nähtav</h4>
@@ -197,7 +197,7 @@
                     var data = $('#main_data').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                     var jsonData = JSON.stringify(data);
                     console.log("Data: " + jsonData);
-                    $.post("/multidimension/api/mainDatas/add", jsonData, function(data){
+                    $.post("/multidimension/data/api/mainDatas/add", jsonData, function(data){
                     document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
                     });
                 });
