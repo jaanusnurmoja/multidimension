@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Loomise aeg: Veebr 13, 2021 kell 08:09 EL
+-- Loomise aeg: Veebr 14, 2021 kell 10:48 EL
 -- Serveri versioon: 10.4.11-MariaDB
 -- PHP versioon: 7.4.6
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabeli struktuur tabelile `blog_content_order_by`
+--
+
+CREATE TABLE `blog_content_order_by` (
+  `id` bigint(20) NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `blog_post_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+--
+-- Andmete tõmmistamine tabelile `blog_content_order_by`
+--
+
+INSERT INTO `blog_content_order_by` (`id`, `order_by`, `blog_post_id`) VALUES
+(1, 1, 2),
+(2, 2, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Tabeli struktuur tabelile `blog_post`
 --
 
@@ -31,7 +51,7 @@ CREATE TABLE `blog_post` (
   `id` bigint(20) NOT NULL,
   `author` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `text` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
+  `text` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
@@ -41,11 +61,45 @@ CREATE TABLE `blog_post` (
 
 INSERT INTO `blog_post` (`id`, `author`, `created_at`, `text`, `title`) VALUES
 (1, NULL, '2021-02-07 10:49:08', 'Igatahes on nüüd olemas ühendus andmebaasiga. Loodamie parimat. Täna oli väga viljakas koolipäev', 'Kas nüüd on rohkem blogi moodi'),
-(2, NULL, '2021-02-07 12:50:01', 'Vaat sedasi. \r\nÕues paistab päike. Mina püüan siit midagi advanced blogi laadset arendada', 'Uus lugu tuleb siia. Siit arendame midagi'),
-(4, NULL, '2021-02-07 14:18:47', 'Päris uniseks olen muutunud juba. aga huvitav on ikkagi', 'Proovin nüüd uue malli järgi'),
-(5, NULL, '2021-02-07 14:18:47', 'proovib vveel', 'proovib veel'),
-(7, NULL, '2021-02-07 14:29:14', 'zcz  fe hbccc xc ', 'noh nüüd'),
-(9, NULL, '2021-02-07 18:35:30', 'Nohh', 'Nohh');
+(2, 'Jaanus Nurmoja', '2021-02-14 03:12:46', 'Mitu head tundi koodikirjutamist on selja taga. Nüüd tuleb tõehetk - kas sellest kõigest ka midagi kasu oli? Alustame lihtsalt lisalõikudest. ', 'Esimene proovipostitus teel täiuslikuma blogi poole');
+
+-- --------------------------------------------------------
+
+--
+-- Tabeli struktuur tabelile `blog_post_paragraph`
+--
+
+CREATE TABLE `blog_post_paragraph` (
+  `id` bigint(20) NOT NULL,
+  `order_by` int(11) DEFAULT NULL,
+  `text` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
+  `blog_post_sub_part_id` bigint(20) DEFAULT NULL,
+  `blog_post_id` bigint(20) DEFAULT NULL,
+  `blog_content_order_by_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+--
+-- Andmete tõmmistamine tabelile `blog_post_paragraph`
+--
+
+INSERT INTO `blog_post_paragraph` (`id`, `order_by`, `text`, `blog_post_sub_part_id`, `blog_post_id`, `blog_content_order_by_id`) VALUES
+(1, NULL, 'This is a simple paragraph of the blog post. It\'s actually in other table, related to the intermediate table which bring the texts together and allows to sort its parts', NULL, 2, 1),
+(2, NULL, 'And here you see the second paragraph to this blog post. Actually here are even more features as multiparagraph content parts. ', NULL, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Tabeli struktuur tabelile `blog_post_sub_part`
+--
+
+CREATE TABLE `blog_post_sub_part` (
+  `id` bigint(20) NOT NULL,
+  `sub_title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_estonian_ci NOT NULL,
+  `description` text COLLATE utf8mb4_estonian_ci NOT NULL,
+  `blog_post_id` bigint(20) DEFAULT NULL,
+  `blog_content_order_by_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 -- --------------------------------------------------------
 
@@ -390,7 +444,8 @@ INSERT INTO `five` (`id`, `four_id`, `title`, `created`, `modified`) VALUES
 (177, 177, 'esimene viies', '2020-06-26 08:12:39', NULL),
 (178, 177, 'teine viies', '2020-06-26 08:12:39', NULL),
 (179, 178, 'Oh kui väike ikka see viimane on', '2021-02-12 00:22:08', NULL),
-(180, 180, 'kala', '2021-02-12 20:30:02', NULL);
+(180, 180, 'kala', '2021-02-12 20:30:02', NULL),
+(181, 181, 'Data 5', '2021-02-13 12:15:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -475,7 +530,8 @@ INSERT INTO `four` (`id`, `three_id`, `title`, `created`, `modified`) VALUES
 (177, 192, 'neljanda nimetus', '2020-06-26 08:12:39', NULL),
 (178, 194, 'Kas asi töötab või ei', '2021-02-12 00:22:08', NULL),
 (179, 195, 'Neljas', '2021-02-12 12:36:32', NULL),
-(180, 196, 'naudib', '2021-02-12 20:30:02', NULL);
+(180, 196, 'naudib', '2021-02-12 20:30:02', NULL),
+(181, 197, 'Data 4', '2021-02-13 12:15:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -1043,7 +1099,8 @@ INSERT INTO `location` (`id`, `main_id`, `name`) VALUES
 (261, 252, 'Telekast tuleb jama'),
 (262, 253, ''),
 (263, 254, 'Öises kodus'),
-(264, 255, 'Heia');
+(264, 255, 'Heia'),
+(265, 257, 'Kodus');
 
 -- --------------------------------------------------------
 
@@ -1241,7 +1298,9 @@ INSERT INTO `main_data` (`id`, `name`, `created`) VALUES
 (252, 'Now new submission', '2021-02-12 20:41:13'),
 (253, 'Eks ma siis ', '2021-02-13 01:27:04'),
 (254, 'Eks ma siis kirjuta siia midagi', '2021-02-13 01:31:06'),
-(255, 'Heia', '2021-02-13 07:06:00');
+(255, 'Heia', '2021-02-13 07:06:00'),
+(256, 'Mai neim is Jack', '2021-02-14 05:13:01'),
+(257, 'Närvi ajab', '2021-02-14 09:42:38');
 
 -- --------------------------------------------------------
 
@@ -1403,7 +1462,9 @@ INSERT INTO `one` (`id`, `title`, `created`, `modified`) VALUES
 (158, NULL, '2021-02-12 18:02:29', NULL),
 (159, 'Submission', '2021-02-12 18:50:44', NULL),
 (160, 'Kui issi tahab saia, siis', '2021-02-12 20:30:02', NULL),
-(161, 'Teine proov ka', '2021-02-13 07:06:22', NULL);
+(161, 'Teine proov ka', '2021-02-13 07:06:22', NULL),
+(162, 'Data 1', '2021-02-13 12:15:17', NULL),
+(163, 'Ja siin on ka kõik korras', '2021-02-14 09:43:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -1620,7 +1681,8 @@ INSERT INTO `three` (`id`, `two_id`, `title`, `created`, `modified`) VALUES
 (193, 192, 'Piisavalt palju', '2021-02-12 00:12:47', NULL),
 (194, 193, 'Et veenduda', '2021-02-12 00:22:08', NULL),
 (195, 194, 'Kolmas sia', '2021-02-12 12:36:32', NULL),
-(196, 195, 'teeb piruka', '2021-02-12 20:30:02', NULL);
+(196, 195, 'teeb piruka', '2021-02-12 20:30:02', NULL),
+(197, 197, 'Data 3', '2021-02-13 12:15:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -1736,7 +1798,8 @@ INSERT INTO `two` (`id`, `one_id`, `title`, `created`, `modified`) VALUES
 (193, 153, 'Seekord kõik viis taset', '2021-02-12 00:22:08', NULL),
 (194, 154, 'Teine tiitel siia', '2021-02-12 12:36:32', NULL),
 (195, 160, 'võtab', '2021-02-12 20:30:02', NULL),
-(196, 161, 'TEine proov', '2021-02-13 07:06:22', NULL);
+(196, 161, 'TEine proov', '2021-02-13 07:06:22', NULL),
+(197, 162, 'Data 2', '2021-02-13 12:15:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -1847,10 +1910,34 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indeksid tabelile `blog_content_order_by`
+--
+ALTER TABLE `blog_content_order_by`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKkbkgf85mbb4618lcqmgc6ao2t` (`blog_post_id`);
+
+--
 -- Indeksid tabelile `blog_post`
 --
 ALTER TABLE `blog_post`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksid tabelile `blog_post_paragraph`
+--
+ALTER TABLE `blog_post_paragraph`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `blog_post` (`blog_post_id`),
+  ADD KEY `FkBlogContentOrder` (`blog_content_order_by_id`),
+  ADD KEY `FKhxt57yvsd8hdv5wx7yurfj1b` (`blog_post_sub_part_id`);
+
+--
+-- Indeksid tabelile `blog_post_sub_part`
+--
+ALTER TABLE `blog_post_sub_part`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `blog_post` (`blog_post_id`),
+  ADD KEY `blogContentOrder` (`blog_content_order_by_id`);
 
 --
 -- Indeksid tabelile `collection`
@@ -2031,6 +2118,24 @@ ALTER TABLE `verification_token`
 --
 
 --
+-- AUTO_INCREMENT tabelile `blog_content_order_by`
+--
+ALTER TABLE `blog_content_order_by`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT tabelile `blog_post`
+--
+ALTER TABLE `blog_post`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT tabelile `blog_post_paragraph`
+--
+ALTER TABLE `blog_post_paragraph`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT tabelile `collection`
 --
 ALTER TABLE `collection`
@@ -2052,13 +2157,13 @@ ALTER TABLE `fields`
 -- AUTO_INCREMENT tabelile `five`
 --
 ALTER TABLE `five`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT tabelile `four`
 --
 ALTER TABLE `four`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT tabelile `grouped_entry`
@@ -2076,7 +2181,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT tabelile `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
 -- AUTO_INCREMENT tabelile `main`
@@ -2088,13 +2193,13 @@ ALTER TABLE `main`
 -- AUTO_INCREMENT tabelile `main_data`
 --
 ALTER TABLE `main_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
 
 --
 -- AUTO_INCREMENT tabelile `one`
 --
 ALTER TABLE `one`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT tabelile `oneall_user`
@@ -2112,13 +2217,13 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT tabelile `three`
 --
 ALTER TABLE `three`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT tabelile `two`
 --
 ALTER TABLE `two`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT tabelile `users`
@@ -2129,6 +2234,27 @@ ALTER TABLE `users`
 --
 -- Tõmmistatud tabelite piirangud
 --
+
+--
+-- Piirangud tabelile `blog_content_order_by`
+--
+ALTER TABLE `blog_content_order_by`
+  ADD CONSTRAINT `FKkbkgf85mbb4618lcqmgc6ao2t` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`);
+
+--
+-- Piirangud tabelile `blog_post_paragraph`
+--
+ALTER TABLE `blog_post_paragraph`
+  ADD CONSTRAINT `FK4j811b9mr0k2aj1fh6fqo6w9c` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`),
+  ADD CONSTRAINT `FKhxt57yvsd8hdv5wx7yurfj1b` FOREIGN KEY (`blog_post_sub_part_id`) REFERENCES `blog_post_sub_part` (`id`),
+  ADD CONSTRAINT `FKnrum44508pi67m0b4eor8naps` FOREIGN KEY (`blog_content_order_by_id`) REFERENCES `blog_content_order_by` (`id`);
+
+--
+-- Piirangud tabelile `blog_post_sub_part`
+--
+ALTER TABLE `blog_post_sub_part`
+  ADD CONSTRAINT `FK4fe6xn44784wybxh2xhph2v80` FOREIGN KEY (`blog_content_order_by_id`) REFERENCES `blog_content_order_by` (`id`),
+  ADD CONSTRAINT `FKfn7sdbua1mc647ir58x9xpo63` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`);
 
 --
 -- Piirangud tabelile `collection`
