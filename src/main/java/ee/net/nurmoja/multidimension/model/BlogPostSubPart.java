@@ -26,13 +26,12 @@ public class BlogPostSubPart implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "order_by", nullable = false)
+    private Long orderBy;
+
     @ManyToOne
     @JoinColumn (name = "blog_post_id")
     private BlogPost blogPost;
-
-    @OneToOne
-    @JoinColumn(name = "blog_content_order_by_id", nullable = false)
-    private BlogContentOrderBy blogContentOrderBy;
 
     @OneToMany(mappedBy = "blogPostSubPart")
     private List<BlogPostParagraph> blogPostParagraphs;

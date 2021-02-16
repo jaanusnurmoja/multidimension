@@ -31,8 +31,4 @@ public class BlogPostParagraph implements Serializable {
     @JoinColumn(name = "blog_post_id")
     private BlogPost blogPost;
 
-    @OneToOne
-    @JoinColumn(name = "blog_content_order_by_id")
-    private BlogContentOrderBy blogContentOrderBy;
-
 }

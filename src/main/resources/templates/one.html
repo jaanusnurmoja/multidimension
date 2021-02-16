@@ -286,6 +286,8 @@
 				});
 
 
+
+
             </script>
             <script type="86dc64a4e19322c20a32dff2-text/javascript">
                 /**
@@ -298,10 +300,16 @@
                     var data = $('#one').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                     var jsonData = JSON.stringify(data);
                     console.log("Data: " + jsonData);
-                    $.post("/multidimension/data/api/ones/add", jsonData, function(data){
-                    document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
+                    $.post("/multidimension/data/api/ones/add", jsonData, function(data, status){
+                    if (status == "success") {
+                        $(location).attr('href', '/multidimension/data/api/ones/' + data);
+                    } else {
+                        document.getElementById('results_display').innerHTML = status + ' submitted: ' + jsonData;
+                    }
                     });
                 });
+
+
 
             </script>
         </div>

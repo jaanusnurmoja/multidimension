@@ -4,6 +4,13 @@
 <head th:include="head::htmlhead"></head>
 <body>
 <header class="rhyzz" th:include="header :: header"></header>
+<main class="rhyzz" style="padding: 25px 0 0 0;">
+    <div class="rhyzz-wrapper">
+        <div class="rhyzz-bootstrap">
+            <button id="formdatamode" style="background-color: orange; padding:10px">TOGGLE FORMS</button>
+        </div>
+    </div>
+</main>
 <main th:id="${'mainData'}" class="rhyzz" th:include="main :: main"></main>
 <main th:id="${'onedata'}" style="display: none" class="rhyzz" th:include="one :: one"></main>
 <footer th:include="footer :: footer"></footer>

@@ -23,6 +23,6 @@ public class BlogPost {
     private LocalDateTime createdAt;
     private String author;
     @OneToMany(mappedBy = "blogPost")
-    private List<BlogContentOrderBy> blogContentOrderByList;
+    private List<BlogPostSubPart> blogPostSubParts;
 
 }

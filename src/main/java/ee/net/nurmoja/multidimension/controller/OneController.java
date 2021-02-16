@@ -46,7 +46,7 @@ class OneController {
                 result.add(saveTwo(two));
             });
         }
-        return saved.getTitle() + ": " + String.join("*", result);
+        return saved.getId().toString();
 
     }
 

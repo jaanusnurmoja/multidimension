@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head::htmlhead(pageTitle = 'TESTPOST')"></head>
+</head>
+<body>
+<header class="rhyzz" th:include="header :: header"></header>
+<main id="singlepost" class="rhyzz">
+    <div class="rhyzz-wrapper">
+        <div class="rhyzz-bootstrap">
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{/js/jquery-ui.min.js}"></script>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript"
+                    th:src="@{/repeatable-fields/js/repeatable-fields.js?version=1.5}"></script>
+            Kui ehk siis siin
+            <form id="blogPost" name="blogPost" action="#" method="post">
+                <input type="submit">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Text</label>
+                    <textarea name="text" class="form-control"></textarea>
+                </div>
+                <div class="repeat">
+                    <table class="table wrapper">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <span class="add btn btn-success btn-sm">Add</span>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody class="container ui-sortable">
+                               <tr class="template row" style="display: none;">
+                                    <!-- MOVE -->
+                                    <td>
+                                        <span class="move btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-sort"></span></span>
+                                        <span class="move-up btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-up"></span></span>
+                                        <input name="blogPostSubParts[{{row-count-placeholder}}][orderBy]"
+                                               type="text" class="move-steps form-control" size="1" value="1">
+                                        <span class="move-down btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-down"></span></span>
+                                    </td>
+                                    <!-- MOVE end -->
+                                    <td class="fieldset">
+                                        <div class="form-group">
+                                            <input type="text" name="blogPostSubParts[{{row-count-placeholder}}][subTitle]"
+                                                   class="form-control"
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" name="blogPostSubParts[{{row-count-placeholder}}][image]" class="form-control"
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                        <textarea name="blogPostSubParts[{{row-count-placeholder}}][description]" class="form-control"></textarea>
+                                        </div>
+                                        <table class="wrapper">
+                                            <thead>
+                                            <tr>
+                                                <td>
+                                                    <span class="add btn btn-success btn-sm">Add</span>
+                                                </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="container ui-sortable" data-rf-row-count="1">
+
+                                                    <tr class="template row" style="display: none;">
+                                                        <!--MOVE-->
+                                                        <td>
+                                                            <span class="move btn btn-info btn-sm">
+                                                            <span class="glyphicon glyphicon-sort"></span>
+                                                            </span>
+                                                            <span class="move-up btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-arrow-up"></span>
+                                                            </span>
+                                                            <input name="blogPostSubParts[{{row-count-placeholder}}][blogPostParagraphs][{{row-count-placeholder}}][orderBy]"
+                                                                   class="move-steps form-control" size="1" value="1"
+                                                            >
+                                                            <span class="move-down btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-arrow-down"></span>
+                                                            </span>
+                                                        </td>
+                                                        <!--END MOVE-->
+                                                        <td class="fieldset">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control"
+                                                                          name="blogPostSubParts[{{row-count-placeholder}}][blogPostParagraphs][{{row-count-placeholder}}][text]">
+                                                                </textarea>
+                                                            </div>
+                                                        </td>
+                                                        <!--REMOVE-->
+                                                        <td>
+                                                            <span class="remove btn btn-danger btn-sm">Remove</span>
+                                                        </td>
+                                                        <!--END REMOVE-->
+                                                    </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <!--REMOVE-->
+                                    <td>
+                                        <span class="remove btn btn-danger btn-sm">Remove</span>
+                                    </td>
+                                    <!--END REMOVE-->
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <input type="submit">
+            </form>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                    jQuery(function() {
+                        jQuery('.repeat').each(function() {
+                            jQuery(this).repeatable_fields({
+                                wrapper: 'table',
+                                container: 'tbody',
+                            });
+                        });
+                    });
+            </script>
+
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                /**
+                 * Retrieves input data from a form and returns it as a JSON object.
+                 */
+
+                    $("#blogPost").submit(function(event){
+                        event.preventDefault();
+                        var formHTML = document.getElementById('blogPost');
+                        var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
+                        var jsonData = JSON.stringify(data);
+                        console.log("Data: " + jsonData);
+                        $.post("/multidimension/blog/create", jsonData, function(data){
+                        alert("Data: " + jsonData + "\nStatus: " + data);
+                        });
+                    });
+
+
+
+
+
+            </script>
+        </div>
+    </div>
+</main>
+<footer th:include="footer :: footer"></footer>
+
+<script
+        th:src="@{'https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js'}"
+        data-cf-settings="86dc64a4e19322c20a32dff2-|49" defer="">
+</script>
+
+</body>
+</html>

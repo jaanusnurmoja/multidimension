@@ -7,31 +7,32 @@
     <div class="rhyzz-wrapper">
         <div class="rhyzz-bootstrap">
             <div class="container" th:fragment="post">
+                <a class="btn btn-lg" th:href="@{'/blog'}">See all posts</a>
+                <a class="btn btn-lg" th:href="@{'/data/api/blogPosts/'+post.id}">See this post in API</a>
+                <a class="btn btn-lg" th:href="@{'/data/api/blogPosts'}">See all posts in API</a>
+                <a class="btn btn-lg" th:href="@{'/data/api'}">API in HAL browser</a>
 
                 <h2 th:text="${title}"></h2>
                 <h3 th:text="${post.title}"></h3>
-                <h4 th:text="${post.text}"></h4>
-                <th:block th:unless="${#lists.isEmpty(post.getBlogContentOrderByList())}">
-                    <th:block th:each="content : ${post.getBlogContentOrderByList()}">
-                        <p class="container-md" th:text="${content.getBlogPostParagraph().getText()}"
-                           th:unless="${#strings.isEmpty(content.getBlogPostParagraph().getText())}"></p>
-                        <th:block th:if="${content.getBlogPostSubPart()}">
-                            <h3 th:text="${content.getBlogPostSubPart().getSubTitle()}"
-                                th:unless="${#strings.isEmpty(content.getBlogPostSubPart().getSubTitle())}"></h3>
-                            <img th:src="${content.getBlogPostSubPart().getImage()}"
-                                 th:unless="${#strings.isEmpty(content.getBlogPostSubPart().getImage())}">
-                            <p class="container-md" th:text="${content.getBlogPostSubPart().getDescription()}"
-                               th:unless="${#strings.isEmpty(content.getBlogPostSubPart().getDescription())}"></p>
-                            <th:block
-                                    th:unless="${#lists.isEmpty(content.getBlogPostSubPart().getBlogPostParagraphs())}">
-                                <th:block th:each="paragraph : ${content.getBlogPostSubPart().getBlogPostParagraphs()}">
+                <h5 th:text="${post.text}"></h5>
+                <th:block th:unless="${#lists.isEmpty(post.getBlogPostSubParts())}">
+                    <th:block th:each="subPart : ${post.getBlogPostSubParts()}">
+                            <th:block th:if="${not #strings.isEmpty(subPart.getSubTitle())}">
+                                <h4 th:text="${subPart.getSubTitle()}"></h4>
+                            </th:block>
+                            <th:block th:unless="${#strings.isEmpty(subPart.getImage())}">
+                                <img th:src="${subPart.getImage()}" width="600">
+                            </th:block>
+                            <p th:unless="${#strings.isEmpty(subPart.getDescription())}"
+                               class="container-md" th:text="${subPart.getDescription()}"></p>
+                            <th:block th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
+                                <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
                                     <p th:text="${paragraph.getText()}"></p>
                                 </th:block>
                             </th:block>
                         </th:block>
                     </th:block>
                 </th:block>
-                <a th:href="@{'/blog'}">all posts</a>
             </div>
         </div>
     </div>

@@ -1,22 +1,222 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base :: imports(pageTitle = 'Create Post')">
+<head th:replace="head::htmlhead(pageTitle = 'Create Post')"></head>
 </head>
 <body>
-<div class="container">
-<form action="#" th:action="@{/posts/create}" th:object="${blogPost}" method="post">
-    <div class="form-group">
-        <label>Title</label>
-    <input type="text" name="title" th:field="*{title}" class="form-control">
-    </div>
-    <div class="form-group">
-        <label>Text</label>
-    <textarea th:field="*{text}" class="form-control"></textarea>
-    </div>
-    <input type="submit">
-</form>
-</div>
+<header class="rhyzz" th:include="header :: header"></header>
+<main id="singlepost" class="rhyzz">
+    <div class="rhyzz-wrapper">
+        <div class="rhyzz-bootstrap">
 
-<div th:include="base :: jquery"></div>
+            <form id="blogPost" action="#" th:action="@{/blog/create}" th:object="${blogPost}" method="post">
+                <input type="submit">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" th:field="*{title}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Text</label>
+                    <textarea th:field="*{text}" class="form-control"></textarea>
+                </div>
+                <div class="repeat">
+                    <div class="wrapper">
+                        <div><span class="add btn btn-success btn-sm">Add</span></div>
+                        <div class="container ui-sortable" data-rf-row-count="1"
+                             th:object="${blogPost.blogPostSubParts}">
+                            <th:block th:each="subPart : ${blogPost.blogPostSubParts}" th:object="${subPart}">
+                                <div class="template row">
+                                    <!-- MOVE -->
+                                    <div>
+                                <span class="move btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-sort"></span></span>
+                                        <span class="move-up btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-up"></span></span>
+                                        <input name="blogPostSubParts[{{row-nr}}][orderBy]"
+                                               th:field="*{orderBy}"
+                                               th:type="text" class="move-steps form-control" size="1" value="1">
+                                        <span class="move-down btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-down"></span></span>
+                                    </div>
+                                    <!-- MOVE end -->
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input type="text" name="blogPostSubParts[{{row-nr}}][subTitle]"
+                                                   class="form-control"
+                                                   th:field="*{subTitle}">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" name="blogPostSubParts[{{row-nr}}][image]" class="form-control"
+                                                   th:field="*{image}">
+                                        </div>
+                                        <div class="form-group">
+                                        <textarea name="blogPostSubParts[{{row-nr}}][description]" class="form-control"
+                                                  th:field="*{description}"></textarea>
+                                        </div>
+                                        <div class="wrapper form-group">
+                                            <div><span class="add btn btn-success btn-sm">Add</span></div>
+                                            <div class="container ui-sortable" data-rf-row-count="1"
+                                                 th:object="${subPart.blogPostParagraphs}">
+                                                <th:block th:each="paragraph : ${subPart.blogPostParagraphs}"
+                                                          th:object="${paragraph}">
+
+                                                    <div class="template row">
+                                                        <!--MOVE-->
+                                                        <div>
+                                                            <span class="move btn btn-info btn-sm">
+                                                            <span class="glyphicon glyphicon-sort"></span>
+                                                            </span>
+                                                            <span class="move-up btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-arrow-up"></span>
+                                                            </span>
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][orderBy]"
+                                                                   th:field="*{orderBy}"
+                                                                   th:type="text" class="move-steps form-control" size="1" value="1">
+                                                            <span class="move-down btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-arrow-down"></span></span>
+                                                        </div>
+                                                        <!--END MOVE-->
+                                                        <fieldset>
+                                                        <div class="form-group">
+                                                            <textarea class="form-control"
+                                                                      name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                      th:field="*{text}"></textarea>
+                                                        </div>
+                                                        </fieldset>
+                                                        <!--REMOVE-->
+                                                        <div>
+                                                            <span class="remove btn btn-danger btn-sm">Remove</span>
+                                                        </div>
+                                                        <!--END REMOVE-->
+                                                    </div>
+
+                                                    <th:block th:with="${subPart.blogPostParagraphs.add(paragraph)}"/>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <!--REMOVE-->
+                                    <div>
+                                        <span class="remove btn btn-danger btn-sm">Remove</span>
+                                    </div>
+                                    <!--END REMOVE-->
+                                </div>
+                                <div class="row">
+                                    <!-- MOVE -->
+                                    <div>
+                                <span class="move btn btn-info btn-sm"><span
+                                        class="glyphicon glyphicon-sort"></span></span>
+                                        <span class="move-up btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-up"></span></span>
+                                        <input name="blogPostSubParts[{{row-nr}}][orderBy]"
+                                               th:field="*{orderBy}"
+                                               th:type="text" class="move-steps form-control" size="1" value="1">
+                                        <span class="move-down btn btn-info btn-sm"><span
+                                                class="glyphicon glyphicon-arrow-down"></span></span>
+                                    </div>
+                                    <!-- END MOVE -->
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input type="text" name="blogPostSubParts[0][subTitle]"
+                                                   class="form-control"
+                                                   th:field="*{subTitle}">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" name="blogPostSubParts[0][image]" class="form-control"
+                                                   th:field="*{image}">
+                                        </div>
+                                        <div class="form-group">
+                                        <textarea name="blogPostSubParts[0][description]" class="form-control"
+                                                  th:field="*{description}"></textarea>
+                                        </div>
+                                        <div class="wrapper form-group">
+                                            <span class="add btn btn-success btn-sm">Add</span>
+                                            <div class="container ui-sortable" data-rf-row-count="1"
+                                                 th:object="${subPart.blogPostParagraphs}">
+                                                <th:block th:each="paragraph : ${subPart.blogPostParagraphs}"
+                                                          th:object="${paragraph}">
+                                                    <div class="template row">
+                                                        <!-- MOVE -->
+                                                        <div>
+                                                            <span class="move btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-sort"></span>
+                                                            </span>
+                                                            <span class="move-up btn btn-info btn-sm"><span
+                                                                    class="glyphicon glyphicon-arrow-up"></span></span>
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][orderBy]"
+                                                                   th:field="*{orderBy}"
+                                                                   th:type="text" class="move-steps form-control" size="1" value="1">
+                                                            <span class="move-down btn btn-info btn-sm"><span
+                                                                    class="glyphicon glyphicon-arrow-down"></span></span>
+                                                        </div>
+                                                        <!-- MOVE end -->
+                                                        <fieldset>
+                                                            <div class="form-group">
+                                                                <textarea class="form-control"
+                                                                          name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                          th:field="*{text}"></textarea>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <th:block th:with="${subPart.blogPostParagraphs.add(paragraph)}"/>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <!--REMOVE-->
+                                    <div>
+                                        <span class="remove btn btn-danger btn-sm">Remove</span>
+                                    </div>
+                                    <!--END REMOVE-->
+                                </div>
+                                <th:block th:with="${blogPost.blogPostSubParts.add(subPart)}"/>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <input type="submit">
+            </form>
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                    jQuery(function() {
+                        jQuery('.repeat').each(function() {
+                            jQuery(this).repeatable_fields({
+                                wrapper: 'div.wrapper',
+                                container: 'div.container',
+                                row_count_placeholder: '{{row-nr}}',
+                            });
+                        });
+                    });
+
+
+
+
+
+            </script>
+
+            <script type="86dc64a4e19322c20a32dff2-text/javascript">
+                /**
+                 * Retrieves input data from a form and returns it as a JSON object.
+                 */
+
+                    $("#blogPost").submit(function(event){
+                        event.preventDefault();
+                        var formHTML = document.getElementById('blogPost');
+                        var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
+                        var jsonData = JSON.stringify(data);
+                        console.log("Data: " + jsonData);
+                        $.post("/multidimension/blog/create", jsonData, function(data){
+                        document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
+                        });
+                    });
+
+
+
+
+
+            </script>
+        </div>
+    </div>
+</main>
+
 </body>
 </html>

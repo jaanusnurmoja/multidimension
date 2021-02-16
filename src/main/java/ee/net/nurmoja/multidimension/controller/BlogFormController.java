@@ -1,61 +1,38 @@
 package ee.net.nurmoja.multidimension.controller;
 
 import ee.net.nurmoja.multidimension.model.BlogPost;
+import ee.net.nurmoja.multidimension.model.BlogPostParagraph;
+import ee.net.nurmoja.multidimension.model.BlogPostSubPart;
 import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("")
-public class PostController {
+public class BlogFormController {
 
-    final private BlogPostRepository service;
-    final private BlogPostParagraphRepository paragraphRepository;
+    final private BlogPostRepository blogPostRepository;
     final private BlogPostSubPartRepository subPartRepository;
+    final private BlogPostParagraphRepository paragraphRepository;
 
-    //Get Only all posts
-    @GetMapping("/blog")
-    ModelAndView getAllPosts(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("blog");
-        modelAndView.addObject("title", "All Posts: ");
-        List<BlogPost> posts = service.findAll();
-        modelAndView.addObject("posts", posts);
-        return modelAndView;
-    }
-
-    //Get Only one post
-    @GetMapping("/blog/{id}")
-    ModelAndView getPost(@PathVariable("id") Long postId){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("post");
-        modelAndView.addObject("title", "Posts: ");
-        BlogPost post = service.getOne(postId);
-        modelAndView.addObject("post", post);
-        return modelAndView;
-    }
-
-
-/*
-    @GetMapping("/blog/create")
+    @GetMapping("/blog/add")
     String createPost(Model model){
         model.addAttribute("blogPost", new BlogPost());
-        return "create";
+        return "submitpost";
     }
-*/
-/*
-    @PostMapping("/blog/create")
+
+    @PostMapping("/data/api/blogPosts/add")
     RedirectView create(@RequestBody BlogPost blogPost){
-        BlogPost savedBlogPost = service.save(blogPost);
+        BlogPost savedBlogPost = blogPostRepository.save(blogPost);
 
         if (blogPost.getBlogPostSubParts() != null)
         {
@@ -75,6 +52,4 @@ public class PostController {
         }
         return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
-*/
-
 }
