@@ -36,18 +36,26 @@ public class BlogFormController {
 
         if (blogPost.getBlogPostSubParts() != null)
         {
+            Long i = 1L;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 subPart.setBlogPost(savedBlogPost);
+                subPart.setOrderBy(i);
                 BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
 
+                int n = 1;
+
                 if (subPart.getBlogPostParagraphs() != null) {
-                    subPart.getBlogPostParagraphs().forEach(paragraph -> {
+                    for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
                         paragraph.setBlogPostSubPart(savedSubPart);
                         paragraph.setBlogPost(savedBlogPost);
+                        paragraph.setOrderBy(n);
                         BlogPostParagraph savedParagraphAtSubpart = paragraphRepository.save(paragraph);
                         savedSubPart.getBlogPostParagraphs().add(savedParagraphAtSubpart);
-                    });
+                        n++;
+                    };
                 }
+
+                i++;
             }
         }
         return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());

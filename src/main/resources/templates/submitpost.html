@@ -33,8 +33,9 @@
                                         class="glyphicon glyphicon-sort"></span></span>
                                         <span class="move-up btn btn-info btn-sm"><span
                                                 class="glyphicon glyphicon-arrow-up"></span></span>
+                                        <input class="move-steps form-control" size="1" value="1">
                                         <input name="blogPostSubParts[{{row-nr}}][orderBy]"
-                                               type="hidden" class="move-steps form-control" size="1" value="{{row-nr}}">
+                                               type="hidden" class="form-control" value="{{row-nr}}">
                                         <span class="move-down btn btn-info btn-sm"><span
                                                 class="glyphicon glyphicon-arrow-down"></span></span>
                                     </div>
@@ -65,9 +66,9 @@
                                                             <span class="move-up btn btn-info btn-sm">
                                                                 <span class="glyphicon glyphicon-arrow-up"></span>
                                                             </span>
+                                                            <input class="move-steps form-control" size="1" value="1">
                                                             <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][orderBy]"
-                                                                   type="hidden" class="move-steps form-control" size="1" value="{{row-nr}}"
-                                                            >
+                                                                   type="hidden" value="{{row-nr}}">
                                                             <span class="move-down btn btn-info btn-sm">
                                                                 <span class="glyphicon glyphicon-arrow-down"></span>
                                                             </span>
@@ -129,9 +130,9 @@
                         var formHTML = document.getElementById('blogPost');
                         var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                         var jsonData = JSON.stringify(data);
-                        console.log("Data: " + jsonData);
-                        $.post("/multidimension/data/api/blogPosts/add", jsonData, function(data){
-                    document.getElementById('results_display').innerHTML = "Data: " + jsonData + "\nStatus: " + data;
+                        document.getElementById('results_display').innerHTML = "Submitted form data: " + jsonData;
+                        $.post("/multidimension/data/api/blogPosts/add", jsonData, function(data, status){
+                        document.getElementById('results_display').innerHTML += "\nStatus: " + status;
                         });
                     });
 
