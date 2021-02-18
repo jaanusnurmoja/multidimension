@@ -2,7 +2,9 @@ package ee.net.nurmoja.multidimension.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "one")
@@ -129,6 +131,6 @@ public class One implements Serializable {
     }
 
     public String toString() {
-        return "One(id=" + this.getId() + ", title=" + this.getTitle() + ", created=" + this.getCreated() + ", modified=" + this.getModified() + ", twos=" + this.getTwos() + ")";
+        return "One(id=" + this.getId() + ", title=" + this.getTitle() + ", created=" + this.getCreated() + ", modified=" + this.getModified() + ", twos=" + this.getTwos().toString() + ")";
     }
 }
