@@ -9,13 +9,10 @@ import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("")
 public class BlogFormController {
@@ -24,14 +21,8 @@ public class BlogFormController {
     final private BlogPostSubPartRepository subPartRepository;
     final private BlogPostParagraphRepository paragraphRepository;
 
-    @GetMapping("/blog/add")
-    String createPost(Model model){
-        model.addAttribute("blogPost", new BlogPost());
-        return "submitpost";
-    }
-
     @PostMapping("/data/api/blogPosts/add")
-    RedirectView create(@RequestBody BlogPost blogPost){
+    String create(@RequestBody(required = false) BlogPost blogPost){
         BlogPost savedBlogPost = blogPostRepository.save(blogPost);
 
         if (blogPost.getBlogPostSubParts() != null)
@@ -58,6 +49,7 @@ public class BlogFormController {
                 i++;
             }
         }
-        return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
+        return savedBlogPost.getId().toString();
+        //return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
 }

@@ -6,6 +6,7 @@ import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +46,12 @@ public class PostController {
     }
 
 
-/*
-    @GetMapping("/blog/create")
+    @GetMapping("/blog/add")
     String createPost(Model model){
         model.addAttribute("blogPost", new BlogPost());
-        return "create";
+        return "createpost";
     }
-*/
+
 /*
     @PostMapping("/blog/create")
     RedirectView create(@RequestBody BlogPost blogPost){
