@@ -27,7 +27,7 @@ public class BlogPostSubPart implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "order_by", nullable = false)
+    @Column(name = "order_by")
     private Long orderBy;
 
     @ManyToOne

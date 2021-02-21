@@ -27,26 +27,18 @@ public class BlogFormController {
 
         if (blogPost.getBlogPostSubParts() != null)
         {
-            Long i = 1L;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 subPart.setBlogPost(savedBlogPost);
-                subPart.setOrderBy(i);
                 BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
-
-                int n = 1;
 
                 if (subPart.getBlogPostParagraphs() != null) {
                     for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
                         paragraph.setBlogPostSubPart(savedSubPart);
-                        paragraph.setBlogPost(savedBlogPost);
-                        paragraph.setOrderBy(n);
-                        BlogPostParagraph savedParagraphAtSubpart = paragraphRepository.save(paragraph);
-                        savedSubPart.getBlogPostParagraphs().add(savedParagraphAtSubpart);
-                        n++;
+                        paragraph.setBlogPostId(savedBlogPost.getId());
+                        paragraphRepository.save(paragraph);
+//                        BlogPostParagraph savedParagraphAtSubpart = savedSubPart.getBlogPostParagraphs().add(savedParagraphAtSubpart);
                     };
                 }
-
-                i++;
             }
         }
         return savedBlogPost.getId().toString();

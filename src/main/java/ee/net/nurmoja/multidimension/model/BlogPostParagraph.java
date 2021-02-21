@@ -28,8 +28,11 @@ public class BlogPostParagraph implements Serializable {
     @JoinColumn(name = "blog_post_sub_part_id")
     private BlogPostSubPart blogPostSubPart;
 
+/*
     @ManyToOne
     @JoinColumn(name = "blog_post_id")
     private BlogPost blogPost;
+*/
+    private Long blogPostId;
 
 }
