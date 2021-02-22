@@ -5,6 +5,7 @@ import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class PostController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("blog");
         modelAndView.addObject("title", "All Posts: ");
-        List<BlogPost> posts = service.findAll();
+        List<BlogPost> posts = service.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         modelAndView.addObject("posts", posts);
         return modelAndView;
     }

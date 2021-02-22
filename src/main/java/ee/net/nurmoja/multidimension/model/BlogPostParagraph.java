@@ -18,8 +18,8 @@ public class BlogPostParagraph implements Serializable {
     @Column(name = "id",unique=true, nullable = false)
     private Long id;
 
-    @Column(name = "order_by")
-    private Integer orderBy;
+    @Column(name = "ordering")
+    private Integer ordering;
 
     @Column(name = "text")
     private String text;
