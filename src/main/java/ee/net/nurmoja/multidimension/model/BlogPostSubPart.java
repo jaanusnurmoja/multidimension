@@ -21,6 +21,9 @@ public class BlogPostSubPart implements Serializable {
     @Column(name = "sub_title")
     private String subTitle;
 
+    @Column(name = "private_sys_title")
+    private String privateSysTitle = "From: " + this.blogPost.getTitle();
+
     @Column(name = "image")
     private String image;
 
