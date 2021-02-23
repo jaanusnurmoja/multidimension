@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("")
 public class BlogFormController {
 
+    private static final String DEFAULT = "DEFAULT";
     final private BlogPostRepository blogPostRepository;
     final private BlogPostSubPartRepository subPartRepository;
     final private BlogPostParagraphRepository paragraphRepository;
@@ -30,6 +31,7 @@ public class BlogFormController {
             int x = 1;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 subPart.setBlogPost(savedBlogPost);
+                subPart.setPrivateSysTitle(subPart.getPrivateSysTitle() + ": " + blogPost.getTitle().trim());
                 subPart.setOrdering(x);
                 BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
 

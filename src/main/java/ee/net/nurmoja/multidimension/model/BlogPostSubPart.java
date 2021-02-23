@@ -21,8 +21,8 @@ public class BlogPostSubPart implements Serializable {
     @Column(name = "sub_title")
     private String subTitle;
 
-    @Column(name = "private_sys_title")
-    private String privateSysTitle = "From: " + this.blogPost.getTitle();
+    @Column(name = "private_sys_title", columnDefinition = "varchar(255) default 'Artiklist'")
+    private String privateSysTitle;
 
     @Column(name = "image")
     private String image;
@@ -40,4 +40,7 @@ public class BlogPostSubPart implements Serializable {
     @OneToMany(mappedBy = "blogPostSubPart")
     private List<BlogPostParagraph> blogPostParagraphs;
 
+    public void setPrivateSysTitle() {
+        this.privateSysTitle = "Artiklist";
+    }
 }

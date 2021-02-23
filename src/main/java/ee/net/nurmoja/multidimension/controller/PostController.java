@@ -42,6 +42,10 @@ public class PostController {
         modelAndView.setViewName("post");
         modelAndView.addObject("title", "Posts: ");
         BlogPost post = service.getOne(postId);
+        subPartRepository.findAllByBlogPostOrderByOrdering(post).forEach(subPart -> {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart));
+        });
+        post.setBlogPostSubParts(subPartRepository.findAllByBlogPostOrderByOrdering(post));
         modelAndView.addObject("post", post);
         return modelAndView;
     }
