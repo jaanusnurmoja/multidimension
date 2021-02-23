@@ -29,19 +29,34 @@
                             <div class="container ui-sortable" data-rf-row-count="1">
                                    <div class="template row" style="display: none;">
                                         <!-- MOVE -->
-                                        <div>
-                                    <span class="move btn btn-info btn-sm"><span
-                                            class="glyphicon glyphicon-sort"></span></span>
-                                            <span class="move-up btn btn-info btn-sm"><span
-                                                    class="glyphicon glyphicon-arrow-up"></span></span>
-                                            <input class="move-steps form-control" size="1" value="1">
-                                            <input name="blogPostSubParts[{{row-nr}}][orderBy]"
-                                                   type="hidden" class="form-control" value="{{row-nr}}">
+                                        <span>
+                                            <span class="move btn btn-info btn-sm">
+                                                <span class="glyphicon glyphicon-sort"></span>
+                                            </span>
+                                            <span class="move-up btn btn-info btn-sm">
+                                                <span class="glyphicon glyphicon-arrow-up"></span>
+                                            </span>
+                                            <span>
+                                                <input type="number"
+                                                                           step="1"
+                                                                           max="9"
+                                                                           min="-9"
+                                                                           class="move-steps input-sm"
+                                                                           style="width:50px"
+                                                                           size="1"
+                                                                           value="1"
+                                                                    >
+                                                <input name="blogPostSubParts[{{row-nr}}][orderBy]"
+                                                       type="hidden"
+                                                       class="form-control"
+                                                       value="{{row-nr}}"
+                                                >
+                                            </span>
                                             <span class="move-down btn btn-info btn-sm"><span
                                                     class="glyphicon glyphicon-arrow-down"></span></span>
-                                        </div>
+                                        </span>
                                         <!-- MOVE end -->
-                                        <fieldset>
+                                        <span class="fieldset">
                                             <div class="form-group">
                                                 <input type="text" name="blogPostSubParts[{{row-nr}}][subTitle]"
                                                        class="form-control"
@@ -60,42 +75,54 @@
 
                                                         <div class="template row" style="display: none;">
                                                             <!--MOVE-->
-                                                            <div>
+                                                            <span>
                                                                 <span class="move btn btn-info btn-sm">
-                                                                <span class="glyphicon glyphicon-sort"></span>
+                                                                    <span class="glyphicon glyphicon-sort"></span>
                                                                 </span>
                                                                 <span class="move-up btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-arrow-up"></span>
                                                                 </span>
-                                                                <input class="move-steps form-control" size="1" value="1">
-                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][orderBy]"
-                                                                       type="hidden" class="orderby" value="{{row-nr}}">
+                                                                <span>
+                                                                    <input type="number"
+                                                                           step="1"
+                                                                           max="9"
+                                                                           min="-9"
+                                                                           class="move-steps input-sm"
+                                                                           style="width:50px"
+                                                                           size="1"
+                                                                           value="1"
+                                                                    >
+                                                                    <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][orderBy]"
+                                                                           type="hidden"
+                                                                           class="orderby"
+                                                                           value="{{row-nr}}">
+                                                                </span>
                                                                 <span class="move-down btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-arrow-down"></span>
                                                                 </span>
-                                                            </div>
+                                                            </span>
                                                             <!--END MOVE-->
-                                                            <fieldset>
+                                                            <span class="fieldset">
                                                             <div class="form-group">
                                                                 <textarea class="form-control"
                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]">
                                                                 </textarea>
                                                             </div>
-                                                            </fieldset>
+                                                            </span>
                                                             <!--REMOVE-->
-                                                            <div>
+                                                            <span>
                                                                 <span class="remove btn btn-danger btn-sm">Remove</span>
-                                                            </div>
+                                                            </span>
                                                             <!--END REMOVE-->
                                                         </div>
 
                                                 </div>
                                             </div>
-                                        </fieldset>
+                                        </span>
                                         <!--REMOVE-->
-                                        <div>
+                                        <span>
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
-                                        </div>
+                                        </span>
                                         <!--END REMOVE-->
                                     </div>
                             </div>
