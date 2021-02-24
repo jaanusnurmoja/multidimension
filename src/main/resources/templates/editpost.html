@@ -91,32 +91,32 @@
                                 <th:block th:unless="${#lists.isEmpty(blogPost.getBlogPostSubParts())}">
                                     <th:block th:each="subPart : ${blogPost.getBlogPostSubParts()}">
                                 <div class="rhyzz-bootstrap row" style="display: block;">
-                                    <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]" th:value="${subPart.id}">
-                                    <input type="hidden" name="blogPostSubParts[{{row-nr}}][blogPost]" th:value="${blogPost.id}">
+                                    <input type="hidden" th:name="${'blogPostSubParts['+subPart.ordering+'][id]'}" th:value="${subPart.id}">
+                                    <input type="hidden" th:name="${'blogPostSubParts['+subPart.ordering+'][blogPost]'}" th:value="${blogPost.id}">
+                                    <input th:name="${'blogPostSubParts['+subPart.ordering+'][ordering]'}"
+                                           type="hidden"
+                                           th:value="${subPart.ordering}"
+                                    >
                                     <table><tr>
                                         <td>
                                             <div style="width:50px" class="move btn btn-info btn-sm">
                                                 <span class="glyphicon glyphicon-sort"></span>
                                             </div>
-                                            <input name="blogPostSubParts[{{row-nr}}][ordering]"
-                                                   type="hidden"
-                                                   th:value="${subPart.ordering}"
-                                            >
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
                                             <span class="add btn btn-success btn-sm">Add new</span>
                                         </td>
                                         <td>
                                             <input type="text"
-                                                   name="blogPostSubParts[{{row-nr}}][subTitle]"
+                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][subTitle]'}"
                                                    class="form-control"
                                                    th:value="${subPart.subTitle}"
                                             >
                                             <input type="file"
-                                                   name="blogPostSubParts[{{row-nr}}][image]"
+                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][image]'}"
                                                    class="form-control-sm"
                                                    th:value="${subPart.image}"
                                             >
-                                            <textarea name="blogPostSubParts[{{row-nr}}][description]"
+                                            <textarea th:name="${'blogPostSubParts['+subPart.ordering+'][description]'}"
                                                       class="form-control"
                                                       th:text="${subPart.description}"
                                             >
@@ -166,15 +166,15 @@
                                                         <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
                                                             <div class="rhyzz-bootstrap row form-group" style="display: block;">
                                                                 <input type="hidden"
-                                                                       name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
+                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][id]'}"
                                                                        th:value="${paragraph.id}"
                                                                 >
                                                                 <input type="hidden"
-                                                                       name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
+                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostSubPartId]'}"
                                                                        th:value="${subPart.id}"
                                                                 >
                                                                 <input type="hidden"
-                                                                       name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostId]'}"
                                                                        th:value="${blogPost.id}"
                                                                 >
                                                                 <table><tr>
@@ -182,7 +182,7 @@
                                                                         <div style="width:50px" class="move btn btn-info btn-sm">
                                                                             <span class="glyphicon glyphicon-sort"></span>
                                                                         </div>
-                                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                            <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
                                                                                    type="hidden"
                                                                                    th:value="${paragraph.ordering}"
                                                                             >
@@ -193,7 +193,7 @@
                                                                     </td>
                                                                     <td class="form-group">
                                                                 <textarea
-                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                        th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][text]'}"
                                                                         class="form-control"
                                                                         style="width: 80%"
                                                                         th:text="${paragraph.text}"
