@@ -43,7 +43,6 @@ public class BlogFormController {
                         paragraph.setOrdering(i);
                         i++;
                         paragraphRepository.save(paragraph);
-//                        BlogPostParagraph savedParagraphAtSubpart = savedSubPart.getBlogPostParagraphs().add(savedParagraphAtSubpart);
                     };
                 }
                 x++;
@@ -52,4 +51,16 @@ public class BlogFormController {
         return savedBlogPost.getId().toString();
         //return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
+
+
+    @RequestMapping(
+            value = "/data/api/blogPosts/{id}/edit",
+            method = RequestMethod.POST)
+    String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id){
+        BlogPost editedBlogPost = blogPostRepository.save(blogPost);
+        return editedBlogPost.getId().toString();
+    }
+
+
+
 }

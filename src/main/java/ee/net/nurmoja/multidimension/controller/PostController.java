@@ -1,6 +1,8 @@
 package ee.net.nurmoja.multidimension.controller;
 
 import ee.net.nurmoja.multidimension.model.BlogPost;
+import ee.net.nurmoja.multidimension.model.BlogPostParagraph;
+import ee.net.nurmoja.multidimension.model.BlogPostSubPart;
 import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,8 +44,8 @@ public class PostController {
     ModelAndView getPost(@PathVariable("id") Long postId){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("post");
-        modelAndView.addObject("title", "Posts: ");
         BlogPost post = service.getOne(postId);
+        modelAndView.addObject("title", "Post: " + post.getTitle());
         subPartRepository.findAllByBlogPostOrderByOrdering(post).forEach(subPart -> {
             subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart));
         });
@@ -56,6 +60,25 @@ public class PostController {
         model.addAttribute("blogPost", new BlogPost());
         return "createpost";
     }
+
+    @GetMapping("/blog/{id}/edit")
+    String editPostGet(@NotNull Model model, @PathVariable("id") Long id){
+        BlogPost editableBlogpost = service.getOne(id);
+        List<BlogPostParagraph> editableParagraphs;
+        List<BlogPostSubPart> editableSubParts = subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost);
+        if (editableSubParts.size()>0) {
+            for (BlogPostSubPart subPart : editableSubParts) {
+                if (subPart.getBlogPostParagraphs().size() > 0) {
+                    editableParagraphs = paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart);
+                    subPart.setBlogPostParagraphs(editableParagraphs);
+                }
+            }
+            editableBlogpost.setBlogPostSubParts(editableSubParts);
+        }
+        model.addAttribute("blogPost", service.getOne(id));
+        return "editpost";
+    }
+
 
 /*
     @PostMapping("/blog/create")
