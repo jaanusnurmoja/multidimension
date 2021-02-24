@@ -4,55 +4,70 @@
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
     <title>jQuery Repeatable Fields</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/reset.css'}" media="all"/>
 
 <!--
     <link rel="stylesheet" th:href="${'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'}" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" th:href="${'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'}" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 -->
+<!--
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css'}" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js'}" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+-->
 
     <link media="screen" rel="stylesheet"
-          th:href="@{/bootstrap/css/rhyzz-bootstrap.min.css}">
-    <link th:href="@{/bootstrap/css/rhyzz-bootstrap-theme.min.css}"
+          th:href="@{'/bootstrap/css/rhyzz-bootstrap.min.css'}">
+    <link th:href="@{'/bootstrap/css/rhyzz-bootstrap-theme.min.css'}"
           rel="stylesheet" media="screen">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/frontend.css}"
+    <link media="screen" rel="stylesheet"
+          th:href="@{'/bootstrap/css/bootstrap.css'}">
+<!--
+    <link th:href="@{'/bootstrap/css/bootstrap-theme.min.css'}"
+-->
+          rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/frontend.css'}"
           media="all"/>
     <!--suppress ThymeleafVariablesResolveInspection -->
     <link rel="stylesheet" type="text/css"
-          th:href="@{https://fonts.googleapis.com/css?family=Droid+Sans}" media="all"/>
+          th:href="@{'https://fonts.googleapis.com/css?family=Droid+Sans'}" media="all"/>
     <!--suppress ThymeleafVariablesResolveInspection -->
     <link media="all" rel="stylesheet"
-          th:href="@{https://fonts.googleapis.com/css?family=Oswald}" type="text/css"/>
+          th:href="@{'https://fonts.googleapis.com/css?family=Oswald'}" type="text/css"/>
     <!--suppress ThymeleafVariablesResolveInspection -->
     <link rel="stylesheet" type="text/css"
-          th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:600}" media="all"/>
+          th:href="@{'https://fonts.googleapis.com/css?family=Open+Sans:600'}" media="all"/>
 
 
-    <script th:src="${'https://code.jquery.com/jquery-3.5.1.min.js'}" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script th:src="@{'https://code.jquery.com/jquery-3.5.1.min.js'}" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-    <script th:src="${'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'}" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script th:src="@{'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'}" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
-    <script th:src="${'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'}" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'}" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.cycle2.min.js}"></script>
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.base64.js}"></script>
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.validate.min.js}"></script>
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.masonry.min.js}"></script>
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/frontend.js}"></script>
-    <script type="86dc64a4e19322c20a32dff2-text/javascript"
-            th:src="@{/js/jquery.serializejson.min.js}"></script>
+            th:src="@{'/js/jquery.min.js'}"></script>
+    <script th:src="@{'/bootstrap/js/bootstrap.min.js'}"></script>
 
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
-    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/jquery.cycle2.min.js'}"></script>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/jquery.base64.js'}"></script>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/jquery.validate.min.js'}"></script>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/jquery.masonry.min.js'}"></script>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/frontend.js'}"></script>
+    <script type="86dc64a4e19322c20a32dff2-text/javascript"
+            th:src="@{'/js/jquery.serializejson.min.js'}"></script>
+
+<!--
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css'}" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js'}" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+-->
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{'/images/favicon.ico'}"/>
+    <link rel="icon" type="image/x-icon" th:href="@{'/images/favicon.ico'}"/>
     <style>
         dl {
             border: 1px solid #bdc8ca;
