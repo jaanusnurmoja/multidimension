@@ -32,27 +32,10 @@
                                             <div style="width:50px" class="move btn btn-info btn-sm">
                                                 <span class="glyphicon glyphicon-sort"></span>
                                             </div>
-                                            <div>
-                                                <input type="number"
-                                                                           step="1"
-                                                                           max="9"
-                                                                           min="-9"
-                                                                           class="move-steps input-sm"
-                                                                           style="width:50px"
-                                                                           size="1"
-                                                                           value="1"
-                                                                    >
                                                 <input name="blogPostSubParts[{{row-nr}}][ordering]"
                                                        type="hidden"
                                                        value
                                                 >
-                                            </div>
-                                            <div class="move-down btn btn-info btn-sm"><span
-                                                    class="glyphicon glyphicon-arrow-down"></span>
-                                            </div>
-                                            <div class="move-up btn btn-info btn-sm">
-                                                <span class="glyphicon glyphicon-arrow-up"></span>
-                                            </div>
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
                                             <span class="add btn btn-success btn-sm">Add new</span>
                                         </td>
@@ -80,26 +63,9 @@
                                                                 <div style="width:50px" class="move btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-sort"></span>
                                                                 </div>
-                                                                <div style="width:50px">
-                                                                    <input type="number"
-                                                                           step="1"
-                                                                           max="9"
-                                                                           min="-9"
-                                                                           class="move-steps input-sm"
-                                                                           style="width:50px"
-                                                                           size="1"
-                                                                           value="1"
-                                                                    >
-                                                                    <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                           type="hidden"
-                                                                           value>
-                                                                </div>
-                                                                <div class="move-down btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-arrow-down"></span>
-                                                                </div>
-                                                                <div class="move-up btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-arrow-up"></span>
-                                                                </div>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                       type="hidden"
+                                                                       value>
                                                                 <div><span class="remove btn btn-danger btn-sm">Remove</span>
                                                                 </div>
                                                                 <div><span class="add btn btn-success btn-sm">Add new</span>
@@ -132,27 +98,10 @@
                                             <div style="width:50px" class="move btn btn-info btn-sm">
                                                 <span class="glyphicon glyphicon-sort"></span>
                                             </div>
-                                            <div>
-                                                <input type="number"
-                                                       step="1"
-                                                       max="9"
-                                                       min="-9"
-                                                       class="move-steps input-sm"
-                                                       style="width:50px"
-                                                       size="1"
-                                                       value="1"
-                                                >
-                                                <input name="blogPostSubParts[{{row-nr}}][ordering]"
-                                                       type="hidden"
-                                                       th:value="${subPart.ordering}"
-                                                >
-                                            </div>
-                                            <div class="move-down btn btn-info btn-sm"><span
-                                                    class="glyphicon glyphicon-arrow-down"></span>
-                                            </div>
-                                            <div class="move-up btn btn-info btn-sm">
-                                                <span class="glyphicon glyphicon-arrow-up"></span>
-                                            </div>
+                                            <input name="blogPostSubParts[{{row-nr}}][ordering]"
+                                                   type="hidden"
+                                                   th:value="${subPart.ordering}"
+                                            >
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
                                             <span class="add btn btn-success btn-sm">Add new</span>
                                         </td>
@@ -193,29 +142,14 @@
                                                                 <div style="width:50px" class="move btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-sort"></span>
                                                                 </div>
-                                                                <div style="width:50px">
-                                                                    <input type="number"
-                                                                           step="1"
-                                                                           max="9"
-                                                                           min="-9"
-                                                                           class="move-steps input-sm"
-                                                                           style="width:50px"
-                                                                           size="1"
-                                                                           value="1"
-                                                                    >
-                                                                    <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                           type="hidden"
-                                                                           value>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                       type="hidden"
+                                                                       value>
+                                                                <div>
+                                                                    <span class="remove btn btn-danger btn-sm">Remove</span>
                                                                 </div>
-                                                                <div class="move-down btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-arrow-down"></span>
-                                                                </div>
-                                                                <div class="move-up btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-arrow-up"></span>
-                                                                </div>
-                                                                <div><span class="remove btn btn-danger btn-sm">Remove</span>
-                                                                </div>
-                                                                <div><span class="add btn btn-success btn-sm">Add new</span>
+                                                                <div>
+                                                                    <span class="add btn btn-success btn-sm">Add new</span>
                                                                 </div>
                                                             </td>
                                                             <td class="form-group">
@@ -248,27 +182,10 @@
                                                                         <div style="width:50px" class="move btn btn-info btn-sm">
                                                                             <span class="glyphicon glyphicon-sort"></span>
                                                                         </div>
-                                                                        <div style="width:50px">
-                                                                            <input type="number"
-                                                                                   step="1"
-                                                                                   max="9"
-                                                                                   min="-9"
-                                                                                   class="move-steps input-sm"
-                                                                                   style="width:50px"
-                                                                                   size="1"
-                                                                                   value="1"
-                                                                            >
                                                                             <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
                                                                                    type="hidden"
                                                                                    th:value="${paragraph.ordering}"
                                                                             >
-                                                                        </div>
-                                                                        <div class="move-down btn btn-info btn-sm">
-                                                                            <span class="glyphicon glyphicon-arrow-down"></span>
-                                                                        </div>
-                                                                        <div class="move-up btn btn-info btn-sm">
-                                                                            <span class="glyphicon glyphicon-arrow-up"></span>
-                                                                        </div>
                                                                         <div><span class="remove btn btn-danger btn-sm">Remove</span>
                                                                         </div>
                                                                         <div><span class="add btn btn-success btn-sm">Add new</span>
