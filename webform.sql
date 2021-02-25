@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Loomise aeg: Veebr 14, 2021 kell 10:48 EL
+-- Loomise aeg: Veebr 25, 2021 kell 01:07 PL
 -- Serveri versioon: 10.4.11-MariaDB
 -- PHP versioon: 7.4.6
 
@@ -20,26 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Andmebaas: `webform`
 --
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `blog_content_order_by`
---
-
-CREATE TABLE `blog_content_order_by` (
-  `id` bigint(20) NOT NULL,
-  `order_by` int(11) NOT NULL,
-  `blog_post_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `blog_content_order_by`
---
-
-INSERT INTO `blog_content_order_by` (`id`, `order_by`, `blog_post_id`) VALUES
-(1, 1, 2),
-(2, 2, 2);
+CREATE DATABASE IF NOT EXISTS `webform` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_estonian_ci;
+USE `webform`;
 
 -- --------------------------------------------------------
 
@@ -47,13 +29,14 @@ INSERT INTO `blog_content_order_by` (`id`, `order_by`, `blog_post_id`) VALUES
 -- Tabeli struktuur tabelile `blog_post`
 --
 
-CREATE TABLE `blog_post` (
-  `id` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `blog_post` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `author` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `text` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `blog_post`
@@ -61,7 +44,8 @@ CREATE TABLE `blog_post` (
 
 INSERT INTO `blog_post` (`id`, `author`, `created_at`, `text`, `title`) VALUES
 (1, NULL, '2021-02-07 10:49:08', 'Igatahes on nüüd olemas ühendus andmebaasiga. Loodamie parimat. Täna oli väga viljakas koolipäev', 'Kas nüüd on rohkem blogi moodi'),
-(2, 'Jaanus Nurmoja', '2021-02-14 03:12:46', 'Mitu head tundi koodikirjutamist on selja taga. Nüüd tuleb tõehetk - kas sellest kõigest ka midagi kasu oli? Alustame lihtsalt lisalõikudest. ', 'Esimene proovipostitus teel täiuslikuma blogi poole');
+(2, 'Jaanus Nurmoja', '2021-02-14 03:12:46', 'Mitu head tundi koodikirjutamist on selja taga. Nüüd tuleb tõehetk - kas sellest kõigest ka midagi kasu oli? Alustame lihtsalt lisalõikudest. ', 'Esimene proovipostitus teel täiuslikuma blogi poole'),
+(33, NULL, '2021-02-25 01:51:35', 'Proovin nüüd ka seda vaikimisi väärtust', 'Veel kord');
 
 -- --------------------------------------------------------
 
@@ -69,22 +53,35 @@ INSERT INTO `blog_post` (`id`, `author`, `created_at`, `text`, `title`) VALUES
 -- Tabeli struktuur tabelile `blog_post_paragraph`
 --
 
-CREATE TABLE `blog_post_paragraph` (
-  `id` bigint(20) NOT NULL,
-  `order_by` int(11) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `blog_post_paragraph` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ordering` int(11) DEFAULT NULL,
   `text` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `blog_post_sub_part_id` bigint(20) DEFAULT NULL,
   `blog_post_id` bigint(20) DEFAULT NULL,
-  `blog_content_order_by_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `blog_content_order_by_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `blog_post` (`blog_post_id`),
+  KEY `FkBlogContentOrder` (`blog_content_order_by_id`),
+  KEY `FKhxt57yvsd8hdv5wx7yurfj1b` (`blog_post_sub_part_id`),
+  KEY `ordering` (`ordering`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `blog_post_paragraph`
 --
 
-INSERT INTO `blog_post_paragraph` (`id`, `order_by`, `text`, `blog_post_sub_part_id`, `blog_post_id`, `blog_content_order_by_id`) VALUES
-(1, NULL, 'This is a simple paragraph of the blog post. It\'s actually in other table, related to the intermediate table which bring the texts together and allows to sort its parts', NULL, 2, 1),
-(2, NULL, 'And here you see the second paragraph to this blog post. Actually here are even more features as multiparagraph content parts. ', NULL, 2, 2);
+INSERT INTO `blog_post_paragraph` (`id`, `ordering`, `text`, `blog_post_sub_part_id`, `blog_post_id`, `blog_content_order_by_id`) VALUES
+(1, 1, 'This is a simple paragraph of the blog post. It\'s actually in other table, related to the intermediate table which bring the texts together and allows to sort its parts', 2, 2, 1),
+(2, 2, 'And here you see the second paragraph to this blog post. Actually here are even more features as multiparagraph content parts. ', 2, 2, 2),
+(3, 3, 'NOw let me write some paragraphs under the subtitle. Here we use paragrap\'s own order by field. In future, someone can perhaps use this paragraph as a citation somewhere else. ', 1, 2, NULL),
+(4, 4, 'Very big challenge would be the ability to convert written HTML text to default subparts. Often people post their blog articles using some desktop client. Like Open Live Writer (derived from former Windows Live Writer). ', 1, 2, NULL),
+(8, 1, 'Panen lihtsalt siia midagi                     ', 6, 33, NULL),
+(9, 4, 'Esimene ', 7, 33, NULL),
+(10, 3, 'Teine', 7, 33, NULL),
+(11, 5, 'Kolmas', 7, 33, NULL),
+(12, 1, 'Neljas', 7, 33, NULL),
+(13, 2, 'Viies', 7, 33, NULL);
 
 -- --------------------------------------------------------
 
@@ -92,14 +89,28 @@ INSERT INTO `blog_post_paragraph` (`id`, `order_by`, `text`, `blog_post_sub_part
 -- Tabeli struktuur tabelile `blog_post_sub_part`
 --
 
-CREATE TABLE `blog_post_sub_part` (
-  `id` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `blog_post_sub_part` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sub_title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_estonian_ci NOT NULL,
-  `description` text COLLATE utf8mb4_estonian_ci NOT NULL,
+  `private_sys_title` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL DEFAULT 'Artiklist',
+  `image` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `blog_post_id` bigint(20) DEFAULT NULL,
-  `blog_content_order_by_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `ordering` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `blog_post` (`blog_post_id`),
+  KEY `blogContentOrder` (`ordering`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+
+--
+-- Andmete tõmmistamine tabelile `blog_post_sub_part`
+--
+
+INSERT INTO `blog_post_sub_part` (`id`, `sub_title`, `private_sys_title`, `image`, `description`, `blog_post_id`, `ordering`) VALUES
+(1, 'This is my first subtitle', '1st-subtitle', '', 'Actually I don\'t have to write here anything as the paragraphs will follow. But let me just to it :)', 2, 3),
+(2, NULL, 'image', 'https://pix10.agoda.net/geo/city/86240/1_86240_02.jpg', 'I don\'t have to write subtitle. But here could be a subtitle for image. ', 2, 4),
+(6, 'Siin oli probleeme sellesama alapealkirjaga osa vaikimisi väärtustega', 'Artiklist', NULL, 'Pärast jälle vahetan', 33, 2),
+(7, 'Nende järjekorramuutus töötab', 'Artiklist', NULL, 'Aga alumises satsis', 33, 1);
 
 -- --------------------------------------------------------
 
@@ -107,11 +118,13 @@ CREATE TABLE `blog_post_sub_part` (
 -- Tabeli struktuur tabelile `collection`
 --
 
-CREATE TABLE `collection` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `collection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `main_id` int(11) DEFAULT NULL,
-  `heading` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `heading` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `main` (`main_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `collection`
@@ -268,85 +281,10 @@ INSERT INTO `collection` (`id`, `main_id`, `heading`) VALUES
 (252, 245, 'Siia igaks juhuks heading kah'),
 (253, 251, 'Sada saia'),
 (254, 252, 'Aias sadas sada saia'),
-(255, 254, 'MIs võiks pealkirjaks panna');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `device_metadata`
---
-
-CREATE TABLE `device_metadata` (
-  `id` bigint(20) NOT NULL,
-  `device_details` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `last_logged_in` datetime DEFAULT NULL,
-  `location` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `experimental`
---
-
-CREATE TABLE `experimental` (
-  `id` int(15) UNSIGNED NOT NULL,
-  `status` varchar(20) COLLATE utf8mb4_estonian_ci DEFAULT 'draft',
-  `sort` int(10) UNSIGNED DEFAULT NULL,
-  `owner` int(10) UNSIGNED DEFAULT NULL,
-  `created_on` datetime DEFAULT NULL,
-  `modified_by` int(10) UNSIGNED DEFAULT NULL,
-  `modified_on` datetime DEFAULT NULL,
-  `eesnimi` varchar(200) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `perekonnanimi` varchar(200) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `syndinud` date NOT NULL,
-  `surnud` date DEFAULT NULL,
-  `elus` tinyint(4) DEFAULT NULL,
-  `five_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `experimental`
---
-
-INSERT INTO `experimental` (`id`, `status`, `sort`, `owner`, `created_on`, `modified_by`, `modified_on`, `eesnimi`, `perekonnanimi`, `syndinud`, `surnud`, `elus`, `five_id`) VALUES
-(1, 'published', NULL, 1, '2020-01-15 09:40:35', 1, '2020-01-15 09:40:35', 'Jaanus', 'Nurmoja', '1967-06-23', NULL, 1, 107),
-(2, 'published', NULL, 1, '2020-01-15 10:04:11', 1, '2020-01-15 10:05:00', 'Keegi', 'Inimene', '2000-01-01', NULL, 1, 107);
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `fields`
---
-
-CREATE TABLE `fields` (
-  `id` int(11) NOT NULL,
-  `tables_id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `showInTable` tinyint(4) NOT NULL,
-  `showInForm` tinyint(4) NOT NULL,
-  `showInDetails` tinyint(4) NOT NULL,
-  `lookupTable` varchar(100) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `lookupKey` varchar(100) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `lookupDisplay` text COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `formDisplay` enum('text','textarea','select','radio','checkbox','hidden') COLLATE utf8mb4_estonian_ci NOT NULL,
-  `form_display` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `lookup_display` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `lookup_key` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `lookup_table` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `show_in_details` int(11) NOT NULL,
-  `show_in_form` int(11) NOT NULL,
-  `show_in_table` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `fields`
---
-
-INSERT INTO `fields` (`id`, `tables_id`, `name`, `showInTable`, `showInForm`, `showInDetails`, `lookupTable`, `lookupKey`, `lookupDisplay`, `formDisplay`, `form_display`, `lookup_display`, `lookup_key`, `lookup_table`, `show_in_details`, `show_in_form`, `show_in_table`) VALUES
-(1, 1, 'id', 0, 0, 0, '', '', '', 'hidden', '', NULL, NULL, NULL, 0, 0, 0),
-(2, 1, 'name', 1, 1, 1, '', '', '', '', '', NULL, NULL, NULL, 0, 0, 0);
+(255, 254, 'MIs võiks pealkirjaks panna'),
+(256, 262, 'Lisan põimitud andmeid, vot'),
+(257, 263, 'sest et üks rahutu hing juba küsib'),
+(258, 263, 'et kas me juba v');
 
 -- --------------------------------------------------------
 
@@ -354,13 +292,15 @@ INSERT INTO `fields` (`id`, `tables_id`, `name`, `showInTable`, `showInForm`, `s
 -- Tabeli struktuur tabelile `five`
 --
 
-CREATE TABLE `five` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `five` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `four_id` int(10) DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `four` (`four_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `five`
@@ -445,7 +385,8 @@ INSERT INTO `five` (`id`, `four_id`, `title`, `created`, `modified`) VALUES
 (178, 177, 'teine viies', '2020-06-26 08:12:39', NULL),
 (179, 178, 'Oh kui väike ikka see viimane on', '2021-02-12 00:22:08', NULL),
 (180, 180, 'kala', '2021-02-12 20:30:02', NULL),
-(181, 181, 'Data 5', '2021-02-13 12:15:17', NULL);
+(181, 181, 'Data 5', '2021-02-13 12:15:17', NULL),
+(182, 182, 'Viiendagi veel takkapihta', '2021-02-16 17:03:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -453,13 +394,15 @@ INSERT INTO `five` (`id`, `four_id`, `title`, `created`, `modified`) VALUES
 -- Tabeli struktuur tabelile `four`
 --
 
-CREATE TABLE `four` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `four` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `three_id` int(11) DEFAULT -1,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `three` (`three_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `four`
@@ -531,26 +474,8 @@ INSERT INTO `four` (`id`, `three_id`, `title`, `created`, `modified`) VALUES
 (178, 194, 'Kas asi töötab või ei', '2021-02-12 00:22:08', NULL),
 (179, 195, 'Neljas', '2021-02-12 12:36:32', NULL),
 (180, 196, 'naudib', '2021-02-12 20:30:02', NULL),
-(181, 197, 'Data 4', '2021-02-13 12:15:17', NULL);
-
--- --------------------------------------------------------
-
---
--- Sise-vaate struktuur `getids`
--- (Tegelik vaade on allpool)
---
-CREATE TABLE `getids` (
-`mainId` mediumtext
-,`main` bigint(21)
-,`locationId` mediumtext
-,`location` bigint(21)
-,`groupedId` mediumtext
-,`grouped_entry` bigint(21)
-,`collectionId` mediumtext
-,`collection` bigint(21)
-,`itemsId` mediumtext
-,`items` bigint(21)
-);
+(181, 197, 'Data 4', '2021-02-13 12:15:17', NULL),
+(182, 200, 'Ja neljanda', '2021-02-16 17:03:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -558,13 +483,15 @@ CREATE TABLE `getids` (
 -- Tabeli struktuur tabelile `grouped_entry`
 --
 
-CREATE TABLE `grouped_entry` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `grouped_entry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `main_id` int(11) DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `image` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `main` (`main_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `grouped_entry`
@@ -656,7 +583,7 @@ INSERT INTO `grouped_entry` (`id`, `main_id`, `url`, `title`, `image`) VALUES
 -- Tabeli struktuur tabelile `hibernate_sequence`
 --
 
-CREATE TABLE `hibernate_sequence` (
+CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
@@ -665,14 +592,14 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(8),
-(8),
-(8),
-(8),
-(8),
-(8),
-(8),
-(8);
+(38),
+(38),
+(38),
+(38),
+(38),
+(38),
+(38),
+(38);
 
 -- --------------------------------------------------------
 
@@ -680,13 +607,15 @@ INSERT INTO `hibernate_sequence` (`next_val`) VALUES
 -- Tabeli struktuur tabelile `items`
 --
 
-CREATE TABLE `items` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `collection_id` int(11) DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
   `year` year(4) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `description` text COLLATE utf8mb4_estonian_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `collection` (`collection_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=334 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `items`
@@ -910,7 +839,9 @@ INSERT INTO `items` (`id`, `collection_id`, `title`, `year`, `description`) VALU
 (328, 253, 'Äkki ongi', NULL, ''),
 (329, 254, 'Nüri meeleolu', 2021, ''),
 (330, 255, 'Mina ise', 2021, 'Ma ei teagi, kas homme on meil seesama õpetaja'),
-(331, 255, 'Ega tea, kas saan blogi täiustada', NULL, '');
+(331, 255, 'Ega tea, kas saan blogi täiustada', NULL, ''),
+(332, 256, 'See on esimene', NULL, 'Jutus jutustamatu, kirjas kirjeldamatu'),
+(333, 256, 'See on teine viimase instantsi post', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -918,11 +849,13 @@ INSERT INTO `items` (`id`, `collection_id`, `title`, `year`, `description`) VALU
 -- Tabeli struktuur tabelile `location`
 --
 
-CREATE TABLE `location` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `location` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `main_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `name` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `main` (`main_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `location`
@@ -1100,18 +1033,11 @@ INSERT INTO `location` (`id`, `main_id`, `name`) VALUES
 (262, 253, ''),
 (263, 254, 'Öises kodus'),
 (264, 255, 'Heia'),
-(265, 257, 'Kodus');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `main`
---
-
-CREATE TABLE `main` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+(265, 257, 'Kodus'),
+(266, 260, 'Linnas'),
+(267, 261, 'Jälle kodus'),
+(268, 262, 'Olen kodus'),
+(269, 263, 'olles kodus');
 
 -- --------------------------------------------------------
 
@@ -1119,11 +1045,12 @@ CREATE TABLE `main` (
 -- Tabeli struktuur tabelile `main_data`
 --
 
-CREATE TABLE `main_data` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `main_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `created` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `main_data`
@@ -1300,19 +1227,13 @@ INSERT INTO `main_data` (`id`, `name`, `created`) VALUES
 (254, 'Eks ma siis kirjuta siia midagi', '2021-02-13 01:31:06'),
 (255, 'Heia', '2021-02-13 07:06:00'),
 (256, 'Mai neim is Jack', '2021-02-14 05:13:01'),
-(257, 'Närvi ajab', '2021-02-14 09:42:38');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `new_location_token`
---
-
-CREATE TABLE `new_location_token` (
-  `id` bigint(20) NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `user_location_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+(257, 'Närvi ajab', '2021-02-14 09:42:38'),
+(258, 'Mida ma siis õigupoolest tegin siin', '2021-02-16 01:04:19'),
+(259, 'Mida ma siis õigupoolest tegin siin', '2021-02-16 01:06:45'),
+(260, 'Uuesti sama küsimus', '2021-02-16 01:07:08'),
+(261, 'Mida see meile annab', '2021-02-16 17:05:57'),
+(262, 'See sisestus peaks mind suunama kuhu vaja', '2021-02-16 17:35:11'),
+(263, 'Tee seda veel', '2021-02-16 17:37:20');
 
 -- --------------------------------------------------------
 
@@ -1320,12 +1241,13 @@ CREATE TABLE `new_location_token` (
 -- Tabeli struktuur tabelile `one`
 --
 
-CREATE TABLE `one` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `one` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `one`
@@ -1464,123 +1386,16 @@ INSERT INTO `one` (`id`, `title`, `created`, `modified`) VALUES
 (160, 'Kui issi tahab saia, siis', '2021-02-12 20:30:02', NULL),
 (161, 'Teine proov ka', '2021-02-13 07:06:22', NULL),
 (162, 'Data 1', '2021-02-13 12:15:17', NULL),
-(163, 'Ja siin on ka kõik korras', '2021-02-14 09:43:19', NULL);
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `oneall_user`
---
-
-CREATE TABLE `oneall_user` (
-  `id` int(11) NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `user_token` char(36) COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `oneall_user`
---
-
-INSERT INTO `oneall_user` (`id`, `user_id`, `user_token`) VALUES
-(2, 1, 'd63f7344-ce41-4580-b8f4-5a835d00b405'),
-(3, 1, 'fa8cad68-1dbe-4f66-b3b2-b52ba6872bfd'),
-(5, 19, '783d9d96-01be-446c-93ba-f12ea762f4ad'),
-(4, 22, 'af6409a8-958b-47cd-bea8-2c9ec488d740');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `password_reset_token`
---
-
-CREATE TABLE `password_reset_token` (
-  `id` bigint(20) NOT NULL,
-  `expiry_date` datetime DEFAULT NULL,
-  `token` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `user_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `privilege`
---
-
-CREATE TABLE `privilege` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `privilege`
---
-
-INSERT INTO `privilege` (`id`, `name`) VALUES
-(1, 'READ_PRIVILEGE'),
-(2, 'WRITE_PRIVILEGE'),
-(3, 'CHANGE_PASSWORD_PRIVILEGE');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `role`
---
-
-CREATE TABLE `role` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `role`
---
-
-INSERT INTO `role` (`id`, `name`) VALUES
-(4, 'ROLE_ADMIN'),
-(5, 'ROLE_USER');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `roles_privileges`
---
-
-CREATE TABLE `roles_privileges` (
-  `role_id` bigint(20) NOT NULL,
-  `privilege_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `roles_privileges`
---
-
-INSERT INTO `roles_privileges` (`role_id`, `privilege_id`) VALUES
-(4, 1),
-(4, 2),
-(4, 3),
-(5, 1),
-(5, 3);
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `tables`
---
-
-CREATE TABLE `tables` (
-  `id` int(11) NOT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `params` text COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `tables`
---
-
-INSERT INTO `tables` (`id`, `parent_id`, `name`, `params`) VALUES
-(1, -1, 'uusTabel', NULL);
+(163, 'Ja siin on ka kõik korras', '2021-02-14 09:43:19', NULL),
+(164, 'Üks', '2021-02-16 01:05:42', NULL),
+(165, 'ahaha one one', '2021-02-16 14:54:38', NULL),
+(166, 'Noh kas nüüd suunab', '2021-02-16 15:01:23', NULL),
+(167, 'Proov j siis ruttu lipet', '2021-02-16 15:10:11', NULL),
+(168, 'O nennen', '2021-02-16 15:11:43', NULL),
+(169, 'O nennen', '2021-02-16 15:12:58', NULL),
+(170, 'Proovin uut redirecti', '2021-02-16 17:03:14', NULL),
+(171, 'Asjad on nii vinged, kui nad liiguvad', '2021-02-16 17:08:48', NULL),
+(172, 'Nüüd tahetakse juntsuleid saata', '2021-02-16 17:27:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -1588,13 +1403,15 @@ INSERT INTO `tables` (`id`, `parent_id`, `name`, `params`) VALUES
 -- Tabeli struktuur tabelile `three`
 --
 
-CREATE TABLE `three` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `three` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `two_id` int(11) DEFAULT -1,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `two` (`two_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `three`
@@ -1682,7 +1499,10 @@ INSERT INTO `three` (`id`, `two_id`, `title`, `created`, `modified`) VALUES
 (194, 193, 'Et veenduda', '2021-02-12 00:22:08', NULL),
 (195, 194, 'Kolmas sia', '2021-02-12 12:36:32', NULL),
 (196, 195, 'teeb piruka', '2021-02-12 20:30:02', NULL),
-(197, 197, 'Data 3', '2021-02-13 12:15:17', NULL);
+(197, 197, 'Data 3', '2021-02-13 12:15:17', NULL),
+(198, 198, 'Kolm', '2021-02-16 01:05:42', NULL),
+(199, 199, 'geniaistid', '2021-02-16 14:54:38', NULL),
+(200, 201, 'Ja kolmanda lisan ma ka', '2021-02-16 17:03:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -1690,13 +1510,15 @@ INSERT INTO `three` (`id`, `two_id`, `title`, `created`, `modified`) VALUES
 -- Tabeli struktuur tabelile `two`
 --
 
-CREATE TABLE `two` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `two` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `one_id` int(11) DEFAULT -1,
   `title` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
+  `modified` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `one` (`one_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
 -- Andmete tõmmistamine tabelile `two`
@@ -1799,462 +1621,30 @@ INSERT INTO `two` (`id`, `one_id`, `title`, `created`, `modified`) VALUES
 (194, 154, 'Teine tiitel siia', '2021-02-12 12:36:32', NULL),
 (195, 160, 'võtab', '2021-02-12 20:30:02', NULL),
 (196, 161, 'TEine proov', '2021-02-13 07:06:22', NULL),
-(197, 162, 'Data 2', '2021-02-13 12:15:17', NULL);
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_estonian_ci NOT NULL,
-  `password` text COLLATE utf8mb4_estonian_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`) VALUES
-(1, '', 'test@test.com', '', 'Mellon'),
-(2, 'Jaanus Nurmoja', 'jaanus.nurmoja@gmail.com', '', ''),
-(19, 'Jaanus Nurmoja', '', '', ''),
-(20, 'Kaia Tambi', 'pollakoer@gmail.com', '', ''),
-(22, 'Jaanus Nurmoja', 'jaanus.nurmoja@outlook.com', '', '');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `users_roles`
---
-
-CREATE TABLE `users_roles` (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `users_roles`
---
-
-INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
-(7, 5),
-(6, 4);
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `user_account`
---
-
-CREATE TABLE `user_account` (
-  `id` bigint(20) NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `enabled` bit(1) NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `is_using2fa` bit(1) NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `password` varchar(60) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `secret` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
---
--- Andmete tõmmistamine tabelile `user_account`
---
-
-INSERT INTO `user_account` (`id`, `email`, `enabled`, `first_name`, `is_using2fa`, `last_name`, `password`, `secret`) VALUES
-(6, 'test@test.com', b'1', 'Test', b'0', 'Test', '$2a$11$tJp10ETrZkYlnizej/kFJOfLtn77yM0gh67buPmyIDblFPkdpGxLS', 'HL65OJO53EGQUVCR'),
-(7, 'pohisissetulek.eesti@gmail.com', b'0', 'Baaselatis', b'0', 'Eestisse', '$2a$11$F.1a42Q0IkK1QBWwjU0CWO63CCEoouPMrrGV0SA.U5MsuNQxZKKni', 'QUWFGM3BGR6NKKRI');
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `user_location`
---
-
-CREATE TABLE `user_location` (
-  `id` bigint(20) NOT NULL,
-  `country` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `enabled` bit(1) NOT NULL,
-  `user_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
--- --------------------------------------------------------
-
---
--- Tabeli struktuur tabelile `verification_token`
---
-
-CREATE TABLE `verification_token` (
-  `id` bigint(20) NOT NULL,
-  `expiry_date` datetime DEFAULT NULL,
-  `token` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
-  `user_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
-
--- --------------------------------------------------------
-
---
--- Vaate struktuur `getids`
---
-DROP TABLE IF EXISTS `getids`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `getids`  AS  select group_concat(distinct `main_data`.`id` separator ',') AS `mainId`,count(`main_data`.`id`) AS `main`,group_concat(distinct ifnull(`location`.`id`,'') separator ',') AS `locationId`,count(`location`.`id`) AS `location`,group_concat(distinct ifnull(`grouped_entry`.`id`,'') separator ',') AS `groupedId`,count(`grouped_entry`.`id`) AS `grouped_entry`,group_concat(distinct ifnull(`collection`.`id`,'') separator ',') AS `collectionId`,count(`collection`.`id`) AS `collection`,group_concat(distinct ifnull(concat_ws(':',`items`.`collection_id`,`items`.`id`),'') separator ',') AS `itemsId`,count(`items`.`id`) AS `items` from ((((`main_data` left join `location` on(`location`.`main_id` = `main_data`.`id`)) left join `grouped_entry` on(`grouped_entry`.`main_id` = `main_data`.`id`)) left join `collection` on(`collection`.`main_id` = `main_data`.`id`)) left join `items` on(`items`.`collection_id` = `collection`.`id`)) group by `main_data`.`id` ;
-
---
--- Indeksid tõmmistatud tabelitele
---
-
---
--- Indeksid tabelile `blog_content_order_by`
---
-ALTER TABLE `blog_content_order_by`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKkbkgf85mbb4618lcqmgc6ao2t` (`blog_post_id`);
-
---
--- Indeksid tabelile `blog_post`
---
-ALTER TABLE `blog_post`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `blog_post_paragraph`
---
-ALTER TABLE `blog_post_paragraph`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `blog_post` (`blog_post_id`),
-  ADD KEY `FkBlogContentOrder` (`blog_content_order_by_id`),
-  ADD KEY `FKhxt57yvsd8hdv5wx7yurfj1b` (`blog_post_sub_part_id`);
-
---
--- Indeksid tabelile `blog_post_sub_part`
---
-ALTER TABLE `blog_post_sub_part`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `blog_post` (`blog_post_id`),
-  ADD KEY `blogContentOrder` (`blog_content_order_by_id`);
-
---
--- Indeksid tabelile `collection`
---
-ALTER TABLE `collection`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `main` (`main_id`);
-
---
--- Indeksid tabelile `device_metadata`
---
-ALTER TABLE `device_metadata`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `experimental`
---
-ALTER TABLE `experimental`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `fields`
---
-ALTER TABLE `fields`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tables` (`tables_id`);
-
---
--- Indeksid tabelile `five`
---
-ALTER TABLE `five`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `four` (`four_id`) USING BTREE;
-
---
--- Indeksid tabelile `four`
---
-ALTER TABLE `four`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `three` (`three_id`) USING BTREE;
-
---
--- Indeksid tabelile `grouped_entry`
---
-ALTER TABLE `grouped_entry`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `main` (`main_id`);
-
---
--- Indeksid tabelile `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `collection` (`collection_id`);
-
---
--- Indeksid tabelile `location`
---
-ALTER TABLE `location`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `main` (`main_id`);
-
---
--- Indeksid tabelile `main`
---
-ALTER TABLE `main`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `main_data`
---
-ALTER TABLE `main_data`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `new_location_token`
---
-ALTER TABLE `new_location_token`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKt4d61xu4ompo2fy5upb033mwm` (`user_location_id`);
-
---
--- Indeksid tabelile `one`
---
-ALTER TABLE `one`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `oneall_user`
---
-ALTER TABLE `oneall_user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_token` (`user_id`,`user_token`) USING BTREE;
-
---
--- Indeksid tabelile `password_reset_token`
---
-ALTER TABLE `password_reset_token`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKns9q9f0f318uaoxiqn6lka9ux` (`user_id`);
-
---
--- Indeksid tabelile `privilege`
---
-ALTER TABLE `privilege`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `roles_privileges`
---
-ALTER TABLE `roles_privileges`
-  ADD KEY `FK5yjwxw2gvfyu76j3rgqwo685u` (`privilege_id`),
-  ADD KEY `FK9h2vewsqh8luhfq71xokh4who` (`role_id`);
-
---
--- Indeksid tabelile `tables`
---
-ALTER TABLE `tables`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tables` (`parent_id`);
-
---
--- Indeksid tabelile `three`
---
-ALTER TABLE `three`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `two` (`two_id`) USING BTREE;
-
---
--- Indeksid tabelile `two`
---
-ALTER TABLE `two`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `one` (`one_id`);
-
---
--- Indeksid tabelile `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `userdata` (`name`,`email`);
-
---
--- Indeksid tabelile `users_roles`
---
-ALTER TABLE `users_roles`
-  ADD KEY `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`),
-  ADD KEY `FKci4mdvg1fmo9eqmwno1y9o0fa` (`user_id`);
-
---
--- Indeksid tabelile `user_account`
---
-ALTER TABLE `user_account`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeksid tabelile `user_location`
---
-ALTER TABLE `user_location`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKewiig159t5fn9jt50sra34adr` (`user_id`);
-
---
--- Indeksid tabelile `verification_token`
---
-ALTER TABLE `verification_token`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_VERIFY_USER` (`user_id`);
-
---
--- AUTO_INCREMENT tõmmistatud tabelitele
---
-
---
--- AUTO_INCREMENT tabelile `blog_content_order_by`
---
-ALTER TABLE `blog_content_order_by`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT tabelile `blog_post`
---
-ALTER TABLE `blog_post`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT tabelile `blog_post_paragraph`
---
-ALTER TABLE `blog_post_paragraph`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT tabelile `collection`
---
-ALTER TABLE `collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
-
---
--- AUTO_INCREMENT tabelile `experimental`
---
-ALTER TABLE `experimental`
-  MODIFY `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT tabelile `fields`
---
-ALTER TABLE `fields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT tabelile `five`
---
-ALTER TABLE `five`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
-
---
--- AUTO_INCREMENT tabelile `four`
---
-ALTER TABLE `four`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
-
---
--- AUTO_INCREMENT tabelile `grouped_entry`
---
-ALTER TABLE `grouped_entry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
-
---
--- AUTO_INCREMENT tabelile `items`
---
-ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
-
---
--- AUTO_INCREMENT tabelile `location`
---
-ALTER TABLE `location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
-
---
--- AUTO_INCREMENT tabelile `main`
---
-ALTER TABLE `main`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT tabelile `main_data`
---
-ALTER TABLE `main_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
-
---
--- AUTO_INCREMENT tabelile `one`
---
-ALTER TABLE `one`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
-
---
--- AUTO_INCREMENT tabelile `oneall_user`
---
-ALTER TABLE `oneall_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT tabelile `tables`
---
-ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT tabelile `three`
---
-ALTER TABLE `three`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
-
---
--- AUTO_INCREMENT tabelile `two`
---
-ALTER TABLE `two`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
-
---
--- AUTO_INCREMENT tabelile `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+(197, 162, 'Data 2', '2021-02-13 12:15:17', NULL),
+(198, 164, 'Kaks', '2021-02-16 01:05:42', NULL),
+(199, 165, 'lähen lasteaeda vot', '2021-02-16 14:54:38', NULL),
+(200, 166, 'tahaks näha', '2021-02-16 15:01:23', NULL),
+(201, 170, 'Lisan teise', '2021-02-16 17:03:14', NULL),
+(202, 171, 'Ingrid luges ja talle tuli see kuidagi tuttav ette', '2021-02-16 17:08:48', NULL),
+(203, 172, 'minu emale muidugi sõbrapäevaks', '2021-02-16 17:27:43', NULL);
 
 --
 -- Tõmmistatud tabelite piirangud
 --
 
 --
--- Piirangud tabelile `blog_content_order_by`
---
-ALTER TABLE `blog_content_order_by`
-  ADD CONSTRAINT `FKkbkgf85mbb4618lcqmgc6ao2t` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`);
-
---
 -- Piirangud tabelile `blog_post_paragraph`
 --
 ALTER TABLE `blog_post_paragraph`
-  ADD CONSTRAINT `FK4j811b9mr0k2aj1fh6fqo6w9c` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`),
-  ADD CONSTRAINT `FKhxt57yvsd8hdv5wx7yurfj1b` FOREIGN KEY (`blog_post_sub_part_id`) REFERENCES `blog_post_sub_part` (`id`),
-  ADD CONSTRAINT `FKnrum44508pi67m0b4eor8naps` FOREIGN KEY (`blog_content_order_by_id`) REFERENCES `blog_content_order_by` (`id`);
+  ADD CONSTRAINT `FK4j811b9mr0k2aj1fh6fqo6w9c` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FKhxt57yvsd8hdv5wx7yurfj1b` FOREIGN KEY (`blog_post_sub_part_id`) REFERENCES `blog_post_sub_part` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Piirangud tabelile `blog_post_sub_part`
 --
 ALTER TABLE `blog_post_sub_part`
-  ADD CONSTRAINT `FK4fe6xn44784wybxh2xhph2v80` FOREIGN KEY (`blog_content_order_by_id`) REFERENCES `blog_content_order_by` (`id`),
-  ADD CONSTRAINT `FKfn7sdbua1mc647ir58x9xpo63` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`);
+  ADD CONSTRAINT `FKfn7sdbua1mc647ir58x9xpo63` FOREIGN KEY (`blog_post_id`) REFERENCES `blog_post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Piirangud tabelile `collection`
@@ -2293,25 +1683,6 @@ ALTER TABLE `location`
   ADD CONSTRAINT `FK1p66q5ocepog0njpy6jtv59yq` FOREIGN KEY (`main_id`) REFERENCES `main_data` (`id`);
 
 --
--- Piirangud tabelile `new_location_token`
---
-ALTER TABLE `new_location_token`
-  ADD CONSTRAINT `FKt4d61xu4ompo2fy5upb033mwm` FOREIGN KEY (`user_location_id`) REFERENCES `user_location` (`id`);
-
---
--- Piirangud tabelile `password_reset_token`
---
-ALTER TABLE `password_reset_token`
-  ADD CONSTRAINT `FKns9q9f0f318uaoxiqn6lka9ux` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`);
-
---
--- Piirangud tabelile `roles_privileges`
---
-ALTER TABLE `roles_privileges`
-  ADD CONSTRAINT `FK5yjwxw2gvfyu76j3rgqwo685u` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`),
-  ADD CONSTRAINT `FK9h2vewsqh8luhfq71xokh4who` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
-
---
 -- Piirangud tabelile `three`
 --
 ALTER TABLE `three`
@@ -2322,25 +1693,6 @@ ALTER TABLE `three`
 --
 ALTER TABLE `two`
   ADD CONSTRAINT `FKtr1ui40a13ej8cdmsge1xrq4a` FOREIGN KEY (`one_id`) REFERENCES `one` (`id`);
-
---
--- Piirangud tabelile `users_roles`
---
-ALTER TABLE `users_roles`
-  ADD CONSTRAINT `FKci4mdvg1fmo9eqmwno1y9o0fa` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`),
-  ADD CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
-
---
--- Piirangud tabelile `user_location`
---
-ALTER TABLE `user_location`
-  ADD CONSTRAINT `FKewiig159t5fn9jt50sra34adr` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`);
-
---
--- Piirangud tabelile `verification_token`
---
-ALTER TABLE `verification_token`
-  ADD CONSTRAINT `FK_VERIFY_USER` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
