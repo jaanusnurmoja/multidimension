@@ -7,7 +7,7 @@
 <main id="createpost" class="rhyzz">
     <div class="rhyzz-wrapper">
         <div class="rhyzz-bootstrap">
-            <div class="container" th:fragment="editpost">
+            <div class="container" th:fragment="createpost">
                 <script type="86dc64a4e19322c20a32dff2-text/javascript"
                         th:src="@{'/js/jquery-ui.min.js'}"></script>
                 <script type="86dc64a4e19322c20a32dff2-text/javascript"
@@ -25,13 +25,9 @@
                             <div><span class="add btn btn-success btn-sm">Add subpart</span></div>
                             <div class="container ui-sortable" data-rf-row-count="1">
                                 <div class="rhyzz-bootstrap template row" style="display: none;">
-                                    <th:block th:with="i=1" th:unless="${#lists.isEmpty(blogPost.getBlogPostSubParts())}">
-                                        <th:block th:each="subPart : ${blogPost.getBlogPostSubParts()}">
-                                        <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]"
-                                        th:value="${subPart.id}">
+                                    <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]">
                                     <input type="hidden" name="blogPostSubParts[{{row-nr}}][blogPostId]"
-                                           th:value="${blogPost.id}"
-                                    >
+                                           th:value="${blogPost.id}">
                                     <table style="max-width: inherit"><tr>
                                         <td>
                                             <div style="width:50px" class="move btn btn-info btn-sm">
@@ -39,8 +35,7 @@
                                             </div>
                                                 <input name="blogPostSubParts[{{row-nr}}][ordering]"
                                                        type="hidden"
-                                                       th:value="${i}"
-                                                       th:with="i++"
+                                                       value
                                                 >
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
                                             <span class="add btn btn-success btn-sm">Add new</span>
@@ -64,47 +59,28 @@
                                                 <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="1">
 
                                                         <div class="rhyzz-bootstrap template row form-group" style="display: none;">
-                                                            <th:block th:with="x=1" th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
-                                                                <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
-                                                                    <input type="hidden"
-                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
-                                                                    >
-                                                                    <input type="hidden"
-                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
-                                                                           th:value="${subPart.id}"
-                                                                    >
-                                                                    <input type="hidden"
-                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
-                                                                           th:value="${blogPost.id}"
-                                                                    >
-                                                                    <table style="max-width: 800px"><tr>
-                                                                        <td>
-                                                                            <div style="width:50px" class="move btn btn-info btn-sm">
-                                                                                <span class="glyphicon glyphicon-sort"></span>
-                                                                            </div>
-                                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                                   type="hidden"
-                                                                                   th:value="${x}"
-                                                                                   th:with="x++"
-                                                                            >
-                                                                            <div>
-                                                                                <span class="remove btn btn-danger btn-sm">Remove</span>
-                                                                            </div>
-                                                                            <div>
-                                                                                <span class="add btn btn-success btn-sm">Add new</span>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="form-group">
+                                                            <table style="max-width: 800px"><tr>
+                                                            <td>
+                                                                <div style="width:50px" class="move btn btn-info btn-sm">
+                                                                    <span class="glyphicon glyphicon-sort"></span>
+                                                                </div>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                       type="hidden"
+                                                                       value>
+                                                                <div><span class="remove btn btn-danger btn-sm">Remove</span>
+                                                                </div>
+                                                                <div><span class="add btn btn-success btn-sm">Add new</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="form-group">
                                                                 <textarea
                                                                         name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
                                                                         class="form-control"
                                                                         style="width: 80%"
                                                                 >
                                                                 </textarea>
-                                                                        </td>
-                                                                    </tr></table>
-                                                                </th:block>
-                                                            </th:block>
+                                                            </td>
+                                                            </tr></table>
                                                        </div>
 
 
@@ -112,8 +88,6 @@
                                             </div>
                                         </td>
                                        </tr></table>
-                                        </th:block>
-                                    </th:block>
                                     </div>
                                 <th:block th:unless="${#lists.isEmpty(blogPost.getBlogPostSubParts())}">
                                     <th:block th:each="subPart : ${blogPost.getBlogPostSubParts()}">
@@ -153,8 +127,6 @@
                                                 <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="1">
 
                                                     <div class="rhyzz-bootstrap template row form-group" style="display: none;">
-                                                        <th:block th:with="x=1" th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
-                                                            <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
                                                         <input type="hidden"
                                                                name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
                                                         >
@@ -173,9 +145,7 @@
                                                                 </div>
                                                                 <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
                                                                        type="hidden"
-                                                                       th:value="${x}"
-                                                                       th:with="x++"
-                                                                >
+                                                                       value>
                                                                 <div>
                                                                     <span class="remove btn btn-danger btn-sm">Remove</span>
                                                                 </div>
@@ -192,10 +162,8 @@
                                                                 </textarea>
                                                             </td>
                                                         </tr></table>
-                                                        </th:block>
-                                                    </th:block>
                                                     </div>
-                                                    <th:block th:with="x=1" th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
+                                                    <th:block th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
                                                         <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
                                                             <div class="rhyzz-bootstrap row form-group" style="display: block;">
                                                                 <input type="hidden"
@@ -217,9 +185,7 @@
                                                                         </div>
                                                                             <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
                                                                                    type="hidden"
-                                                                                   th:value="${x}"
-                                                                                   th:with="x++"
-
+                                                                                   th:value="${paragraph.ordering}"
                                                                             >
                                                                         <div><span class="remove btn btn-danger btn-sm">Remove</span>
                                                                         </div>
@@ -282,18 +248,20 @@
 
                         $("#blogPost").submit(function(event){
                             event.preventDefault();
+                            var formHTML = document.getElementById('blogPost');
                             var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                             var jsonData = JSON.stringify(data);
-                            //document.getElementById('results_display').innerHTML = "Submitted form data: \n" + jsonData;
-                           console.log(jsonData);
+                            document.getElementById('results_display').innerHTML = "Submitted form data: " + jsonData;
                            $.ajax({
                                 url: '/multidimension/data/api/blogPosts/' + data.id,
                                 type: 'PUT',
-                                data: {json: jsonData, formData: data},
                                 success: function(result) {
-                                    $(location).attr('href', '/multidimension/blog/' + data.id);
+                                    $(location).attr('href', '/multidimension/blog/' + data);
                                 }
                             });
+                            if (status != "success") {
+                                document.getElementById('results_display').innerHTML = status + ' submitted: ' + jsonData;
+                            }
 
                         });
 
