@@ -54,8 +54,8 @@ public class BlogFormController {
 
 
     @RequestMapping(
-            value = "/data/api/blogPosts/{id}/edit",
-            method = RequestMethod.POST)
+            value = "/data/api/blogPosts/{id}",
+            method = RequestMethod.PUT)
     String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id){
         BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         return editedBlogPost.getId().toString();
