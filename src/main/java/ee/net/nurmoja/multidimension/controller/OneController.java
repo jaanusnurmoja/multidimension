@@ -194,9 +194,9 @@ class OneController {
     @PatchMapping("/one/{id}")
     public One replaceOne(@RequestBody One newOne, @PathVariable Integer id) {
 
-        return oneRepository.findById(id).map(oneWork -> {
-            return oneRepository.save(newOne);
-        }).orElseGet(() -> {
+        return oneRepository.findById(id).map(oneWork ->
+             oneRepository.save(newOne)
+        ).orElseGet(() -> {
             newOne.setId(id);
             return oneRepository.save(newOne);
         });
@@ -205,9 +205,9 @@ class OneController {
     @PatchMapping("/four/{id}")
     public Four replaceFour(@RequestBody Four newFour, @PathVariable Integer id) {
 
-        return fourRepository.findById(id).map(fourWork -> {
-            return fourRepository.save(newFour);
-        }).orElseGet(() -> {
+        return fourRepository.findById(id).map(fourWork ->
+            fourRepository.save(newFour)
+        ).orElseGet(() -> {
             newFour.setId(id);
             return fourRepository.save(newFour);
         });
