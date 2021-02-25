@@ -251,18 +251,17 @@
                             var formHTML = document.getElementById('blogPost');
                             var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
                             var jsonData = JSON.stringify(data);
-                            document.getElementById('results_display').innerHTML = "Submitted form data: " + jsonData;
+                            console.log(jsonData);
+                            document.getElementById('results_display').innerHTML = "Submitted form data: " + formHTML;
+
                            $.ajax({
                                 url: '/multidimension/data/api/blogPosts/' + data.id,
                                 type: 'PUT',
+                                data: {json: jsonData, data: data}
                                 success: function(result) {
-                                    $(location).attr('href', '/multidimension/blog/' + data);
+                                    $(location).attr('href', '/multidimension/blog/' + data.id);
                                 }
                             });
-                            if (status != "success") {
-                                document.getElementById('results_display').innerHTML = status + ' submitted: ' + jsonData;
-                            }
-
                         });
 
 
