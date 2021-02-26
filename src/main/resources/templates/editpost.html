@@ -284,6 +284,7 @@
                            $.ajax({
                                 url: '/multidimension/data/api/blogPosts/' + data.id,
                                 type: 'PUT',
+                                data: jsonData,
                                 success: function(result) {
                                     $(location).attr('href', '/multidimension/blog/' + data.id);
                                 }

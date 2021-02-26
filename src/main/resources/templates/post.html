@@ -13,6 +13,7 @@
                 <a class="btn btn-lg" th:href="${'/multidimension/data/api'}">API in HAL browser</a>
 
                 <h2 th:text="${title}"></h2>
+                <a th:href="${post.id+'/edit'}"><button class="bg-transparent">EDIT</button> </a>
                 <h3 th:text="${post.title}"></h3>
                 <h5 th:text="${post.text}"></h5>
                 <th:block th:unless="${#lists.isEmpty(post.getBlogPostSubParts())}">
