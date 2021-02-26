@@ -23,20 +23,20 @@
                     <div class="repeat">
                         <div class="wrapper">
                             <div><span class="add btn btn-success btn-sm">Add subpart</span></div>
-                            <div class="container ui-sortable" data-rf-row-count="1">
+                            <div class="container ui-sortable">
                                 <div class="rhyzz-bootstrap template row" style="display: none;">
                                     <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]">
                                     <input type="hidden" name="blogPostSubParts[{{row-nr}}][blogPostId]"
-                                           th:value="${blogPost.id}">
+                                    >
+                                    <input name="blogPostSubParts[{{row-nr}}][ordering]"
+                                           type="hidden"
+                                           value
+                                    >
                                     <table style="max-width: inherit"><tr>
                                         <td>
                                             <div style="width:50px" class="move btn btn-info btn-sm">
                                                 <span class="glyphicon glyphicon-sort"></span>
                                             </div>
-                                                <input name="blogPostSubParts[{{row-nr}}][ordering]"
-                                                       type="hidden"
-                                                       value
-                                                >
                                             <span class="remove btn btn-danger btn-sm">Remove</span>
                                             <span class="add btn btn-success btn-sm">Add new</span>
                                         </td>
@@ -56,17 +56,26 @@
                                                 </textarea>
                                             <div class="wrapper" style="width:80%">
                                                 <div><span class="add btn btn-success btn-sm">Add paragraph</span></div>
-                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="1">
+                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="0">
 
                                                         <div class="rhyzz-bootstrap template row form-group" style="display: none;">
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
+                                                                   type="hidden"
+                                                                   value>
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
+                                                                   type="hidden"
+                                                                   value>
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                   type="hidden"
+                                                                   value>
+                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                   type="hidden"
+                                                                   value>
                                                             <table style="max-width: 800px"><tr>
                                                             <td>
                                                                 <div style="width:50px" class="move btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-sort"></span>
                                                                 </div>
-                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                       type="hidden"
-                                                                       value>
                                                                 <div><span class="remove btn btn-danger btn-sm">Remove</span>
                                                                 </div>
                                                                 <div><span class="add btn btn-success btn-sm">Add new</span>
@@ -82,8 +91,6 @@
                                                             </td>
                                                             </tr></table>
                                                        </div>
-
-
                                                 </div>
                                             </div>
                                         </td>
@@ -124,7 +131,7 @@
                                                 </textarea>
                                             <div class="wrapper" style="width:80%">
                                                 <div><span class="add btn btn-success btn-sm">Add paragraph</span></div>
-                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="1">
+                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="0">
 
                                                     <div class="rhyzz-bootstrap template row form-group" style="display: none;">
                                                         <input type="hidden"
@@ -132,20 +139,18 @@
                                                         >
                                                         <input type="hidden"
                                                                name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
-                                                               th:value="${subPart.id}"
                                                         >
                                                         <input type="hidden"
                                                                name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
-                                                               th:value="${blogPost.id}"
                                                         >
+                                                        <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                               type="hidden"
+                                                               value>
                                                         <table style="max-width: 800px"><tr>
                                                             <td>
                                                                 <div style="width:50px" class="move btn btn-info btn-sm">
                                                                     <span class="glyphicon glyphicon-sort"></span>
                                                                 </div>
-                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                       type="hidden"
-                                                                       value>
                                                                 <div>
                                                                     <span class="remove btn btn-danger btn-sm">Remove</span>
                                                                 </div>
@@ -178,15 +183,15 @@
                                                                        th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostId]'}"
                                                                        th:value="${blogPost.id}"
                                                                 >
+                                                                <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
+                                                                       type="hidden"
+                                                                       th:value="${paragraph.ordering}"
+                                                                >
                                                                 <table><tr>
                                                                     <td>
                                                                         <div style="width:50px" class="move btn btn-info btn-sm">
                                                                             <span class="glyphicon glyphicon-sort"></span>
                                                                         </div>
-                                                                            <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
-                                                                                   type="hidden"
-                                                                                   th:value="${paragraph.ordering}"
-                                                                            >
                                                                         <div><span class="remove btn btn-danger btn-sm">Remove</span>
                                                                         </div>
                                                                         <div><span class="add btn btn-success btn-sm">Add new</span>
@@ -203,13 +208,8 @@
                                                                     </td>
                                                                 </tr></table>
                                                             </div>
-
-
                                                         </th:block>
                                                     </th:block>
-
-
-
                                                 </div>
                                             </div>
                                         </td>
@@ -234,11 +234,6 @@
                                 });
                             });
                         });
-
-
-
-
-
                 </script>
 
                 <script type="86dc64a4e19322c20a32dff2-text/javascript">
@@ -248,26 +243,23 @@
 
                         $("#blogPost").submit(function(event){
                             event.preventDefault();
-                            var formHTML = document.getElementById('blogPost');
+                            //var formHTML = document.getElementById('blogPost');
                             var data = $('#blogPost').serializeJSON({parseNumbers:true,useIntKeysAsArrayIndex:true});
-                            var jsonData = JSON.stringify(data);
-                            console.log(jsonData);
-                            document.getElementById('results_display').innerHTML = "Submitted form data: " + formHTML;
 
+                            var jsonData = JSON.stringify(data);
+                            document.getElementById('results_display').innerHTML = "Submitted form data: " + jsonData;
                            $.ajax({
                                 url: '/multidimension/data/api/blogPosts/' + data.id,
                                 type: 'PUT',
-                                data: {json: jsonData, data: data}
                                 success: function(result) {
                                     $(location).attr('href', '/multidimension/blog/' + data.id);
                                 }
                             });
+                            if (status != "success") {
+                                document.getElementById('results_display').innerHTML = status + ' submitted: ' + jsonData;
+                            }
+
                         });
-
-
-
-
-
                 </script>
             </div>
         </div>
