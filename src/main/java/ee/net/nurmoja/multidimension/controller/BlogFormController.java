@@ -53,10 +53,33 @@ public class BlogFormController {
     }
 
 
-    @RequestMapping(
-            value = "/data/api/blogPosts/{id}",
-            method = RequestMethod.PUT)
+    @PutMapping("/data/api/blogPosts/{id}")
     String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id){
+        if (blogPost.getBlogPostSubParts().size() > 0) {
+            int i = 1;
+            for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
+                if (subPart != null) {
+                    if (subPart.getBlogPost() != blogPost) subPart.setBlogPost(blogPost);
+                    subPart.setPrivateSysTitle("from: " + blogPost.getTitle().trim());
+
+                    subPart.setOrdering(i);
+                   BlogPostSubPart saved =  subPartRepository.save(subPart);
+                    if (subPart.getBlogPostParagraphs().size() > 0) {
+                        int x = 1;
+                        for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
+                            if (paragraph != null) {
+                                if (paragraph.getBlogPostSubPart() != saved) paragraph.setBlogPostSubPart(subPart);
+                                if (!paragraph.getBlogPostId().equals(blogPost.getId())) paragraph.setBlogPostId(blogPost.getId());
+                                paragraph.setOrdering(x);
+                                paragraphRepository.save(paragraph);
+                                x++;
+                            }
+                        }
+                    }
+                    i++;
+                }
+            }
+        }
         BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         return editedBlogPost.getId().toString();
     }
