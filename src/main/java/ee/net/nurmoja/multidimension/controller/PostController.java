@@ -64,19 +64,13 @@ public class PostController {
     @GetMapping("/blog/{id}/edit")
     String editPostGet(@NotNull Model model, @PathVariable("id") Long id){
         BlogPost editableBlogpost = service.getOne(id);
-        List<BlogPostParagraph> editableParagraphs;
-        List<BlogPostSubPart> editableSubParts = subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost);
-        if (editableSubParts.size()>0) {
-            for (BlogPostSubPart subPart : editableSubParts) {
-                if (subPart.getBlogPostParagraphs().size() > 0) {
-                    editableParagraphs = paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart);
-                    subPart.setBlogPostParagraphs(editableParagraphs);
-                }
-            }
-            editableBlogpost.setBlogPostSubParts(editableSubParts);
-        }
-        model.addAttribute("blogPost", service.getOne(id));
-        return "editpost";
+        subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost).forEach(subPart -> {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart));
+        });
+        editableBlogpost.setBlogPostSubParts(subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost));
+
+        model.addAttribute("blogPost", editableBlogpost);
+    return "editpost";
     }
 
 

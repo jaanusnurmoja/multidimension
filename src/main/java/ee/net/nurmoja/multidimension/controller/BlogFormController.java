@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Collections;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("")
@@ -28,7 +30,7 @@ public class BlogFormController {
 
         if (blogPost.getBlogPostSubParts() != null)
         {
-            int x = 1;
+            int x = 0;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 subPart.setBlogPost(savedBlogPost);
                 subPart.setPrivateSysTitle(subPart.getPrivateSysTitle() + ": " + blogPost.getTitle().trim());
@@ -36,7 +38,7 @@ public class BlogFormController {
                 BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
 
                 if (subPart.getBlogPostParagraphs() != null) {
-                    int i = 1;
+                    int i = 0;
                     for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
                         paragraph.setBlogPostSubPart(savedSubPart);
                         paragraph.setBlogPostId(savedBlogPost.getId());
@@ -53,10 +55,14 @@ public class BlogFormController {
     }
 
 
-    @PutMapping("/data/api/blogPosts/{id}")
+    @RequestMapping(value = "/data/api/blogPosts/{id}", method = {
+            RequestMethod.GET,
+            RequestMethod.PUT,
+            RequestMethod.PATCH
+    })
     String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id){
-        if (blogPost.getBlogPostSubParts().size() > 0) {
-            int i = 1;
+        if (!blogPost.getBlogPostSubParts().isEmpty()) {
+            int i = 0;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 if (subPart != null) {
                     if (subPart.getBlogPost() != blogPost) subPart.setBlogPost(blogPost);
@@ -65,7 +71,7 @@ public class BlogFormController {
                     subPart.setOrdering(i);
                    BlogPostSubPart saved =  subPartRepository.save(subPart);
                     if (subPart.getBlogPostParagraphs().size() > 0) {
-                        int x = 1;
+                        int x = 0;
                         for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
                             if (paragraph != null) {
                                 if (paragraph.getBlogPostSubPart() != saved) paragraph.setBlogPostSubPart(subPart);
