@@ -20,184 +20,214 @@
                         <input type="text" name="title" class="form-control" th:field="*{title}">
                         <label>Text</label>
                         <textarea name="text" class="form-control" th:field="*{text}"></textarea>
-                    <div class="repeat">
-                        <div class="wrapper">
-                            <div><span class="add btn btn-success btn-sm">Add subpart</span></div>
-                            <div class="container ui-sortable">
-                                <div class="rhyzz-bootstrap template row" style="display: none;">
-                                    <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]">
-                                    <input type="hidden" name="blogPostSubParts[{{row-nr}}][blogPostId]"
-                                    >
-                                    <input name="blogPostSubParts[{{row-nr}}][ordering]"
-                                           type="hidden"
-                                           value
-                                    >
-                                    <table style="max-width: inherit"><tr>
-                                        <td>
-                                            <div style="width:50px" class="move btn btn-info btn-sm">
-                                                <span class="glyphicon glyphicon-sort"></span>
-                                            </div>
-                                            <span class="remove btn btn-danger btn-sm">Remove</span>
-                                            <span class="add btn btn-success btn-sm">Add new</span>
-                                        </td>
-                                        <td>
-                                                <input type="text"
-                                                       name="blogPostSubParts[{{row-nr}}][subTitle]"
-                                                       class="form-control"
-                                                       aria-label="Subtitle(optioal)"
-                                                >
-                                                <input type="file"
-                                                       name="blogPostSubParts[{{row-nr}}][image]"
-                                                       class="form-control-sm"
-                                                >
-                                                <textarea name="blogPostSubParts[{{row-nr}}][description]"
-                                                          class="form-control"
-                                                >
-                                                </textarea>
-                                            <div class="wrapper" style="width:80%">
-                                                <div><span class="add btn btn-success btn-sm">Add paragraph</span></div>
-                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="0">
-
-                                                        <div class="rhyzz-bootstrap template row form-group" style="display: none;">
-                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
-                                                                   type="hidden"
-                                                                   value>
-                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
-                                                                   type="hidden"
-                                                                   value>
-                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
-                                                                   type="hidden"
-                                                                   value>
-                                                            <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                                   type="hidden"
-                                                                   value>
-                                                            <table style="max-width: 800px"><tr>
-                                                            <td>
-                                                                <div style="width:50px" class="move btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-sort"></span>
-                                                                </div>
-                                                                <div><span class="remove btn btn-danger btn-sm">Remove</span>
-                                                                </div>
-                                                                <div><span class="add btn btn-success btn-sm">Add new</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="form-group">
-                                                                <textarea
-                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
-                                                                        class="form-control"
-                                                                        style="width: 80%"
-                                                                >
-                                                                </textarea>
-                                                            </td>
-                                                            </tr></table>
-                                                       </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                       </tr></table>
-                                    </div>
-                                <th:block th:unless="${#lists.isEmpty(blogPost.getBlogPostSubParts())}">
-                                    <th:block th:each="subPart : ${blogPost.getBlogPostSubParts()}">
-                                <div class="rhyzz-bootstrap row" style="display: block;">
-                                    <input type="hidden" th:name="${'blogPostSubParts['+subPart.ordering+'][id]'}" th:value="${subPart.id}">
-                                    <input type="hidden" th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostId]'}" th:value="${blogPost.id}">
-                                    <input th:name="${'blogPostSubParts['+subPart.ordering+'][ordering]'}"
-                                           type="hidden"
-                                           th:value="${subPart.ordering}"
-                                    >
-                                    <table><tr>
-                                        <td>
-                                            <div style="width:50px" class="move btn btn-info btn-sm">
-                                                <span class="glyphicon glyphicon-sort"></span>
-                                            </div>
-                                            <span class="remove btn btn-danger btn-sm">Remove</span>
-                                            <span class="add btn btn-success btn-sm">Add new</span>
-                                        </td>
-                                        <td>
-                                            <input type="text"
-                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][subTitle]'}"
-                                                   class="form-control"
-                                                   th:value="${subPart.subTitle}"
-                                            >
-                                            <input type="file"
-                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][image]'}"
-                                                   class="form-control-sm"
-                                                   th:value="${subPart.image}"
-                                            >
-                                            <textarea th:name="${'blogPostSubParts['+subPart.ordering+'][description]'}"
-                                                      class="form-control"
-                                                      th:text="${subPart.description}"
-                                            >
-                                                </textarea>
-                                            <div class="wrapper" style="width:80%">
-                                                <div><span class="add btn btn-success btn-sm">Add paragraph</span></div>
-                                                <div class="rhyzz-bootstrap container ui-sortable" data-rf-row-count="0">
-
-                                                    <div class="rhyzz-bootstrap template row form-group" style="display: none;">
-                                                        <input type="hidden"
-                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
-                                                        >
-                                                        <input type="hidden"
-                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
-                                                        >
-                                                        <input type="hidden"
-                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
-                                                        >
-                                                        <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
-                                                               type="hidden"
-                                                               value>
-                                                        <table style="max-width: 800px"><tr>
-                                                            <td>
-                                                                <div style="width:50px" class="move btn btn-info btn-sm">
-                                                                    <span class="glyphicon glyphicon-sort"></span>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="remove btn btn-danger btn-sm">Remove</span>
-                                                                </div>
-                                                                <div>
-                                                                    <span class="add btn btn-success btn-sm">Add new</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="form-group">
-                                                                <textarea
-                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
-                                                                        class="form-control"
-                                                                        style="width: 80%"
-                                                                >
-                                                                </textarea>
-                                                            </td>
-                                                        </tr></table>
+                        <div class="repeat">
+                            <div class="wrapper">
+                                <div><span class="add btn btn-success btn-sm">Add subpart</span></div>
+                                <div class="container ui-sortable">
+                                    <div class="rhyzz-bootstrap template row" style="display: none;">
+                                        <input type="hidden" name="blogPostSubParts[{{row-nr}}][id]">
+                                        <input type="hidden" name="blogPostSubParts[{{row-nr}}][blogPostId]"
+                                        >
+                                        <input name="blogPostSubParts[{{row-nr}}][ordering]"
+                                               type="hidden"
+                                               value
+                                        >
+                                        <table style="max-width: inherit">
+                                            <tr>
+                                                <td>
+                                                    <div style="width:50px" class="move btn btn-info btn-sm">
+                                                        <span class="glyphicon glyphicon-sort"></span>
                                                     </div>
-                                                    <th:block th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
-                                                        <th:block th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
-                                                            <div class="rhyzz-bootstrap row form-group" style="display: block;">
-                                                                <input type="hidden"
-                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][id]'}"
-                                                                       th:value="${paragraph.id}"
-                                                                >
-                                                                <input type="hidden"
-                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostSubPartId]'}"
-                                                                       th:value="${subPart.id}"
-                                                                >
-                                                                <input type="hidden"
-                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostId]'}"
-                                                                       th:value="${blogPost.id}"
-                                                                >
-                                                                <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
+                                                    <span class="remove btn btn-danger btn-sm">Remove</span>
+                                                    <span class="add btn btn-success btn-sm">Add new</span>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                           name="blogPostSubParts[{{row-nr}}][subTitle]"
+                                                           class="form-control"
+                                                           aria-label="Subtitle(optioal)"
+                                                    >
+                                                    <input type="file"
+                                                           name="blogPostSubParts[{{row-nr}}][image]"
+                                                           class="form-control-sm"
+                                                    >
+                                                    <textarea name="blogPostSubParts[{{row-nr}}][description]"
+                                                              class="form-control"
+                                                    >
+                                                </textarea>
+                                                    <div class="wrapper" style="width:80%">
+                                                        <div><span
+                                                                class="add btn btn-success btn-sm">Add paragraph</span>
+                                                        </div>
+                                                        <div class="rhyzz-bootstrap container ui-sortable"
+                                                             data-rf-row-count="0">
+
+                                                            <div class="rhyzz-bootstrap template row form-group"
+                                                                 style="display: none;">
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
                                                                        type="hidden"
-                                                                       th:value="${paragraph.ordering}"
+                                                                       value>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
+                                                                       type="hidden"
+                                                                       value>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                       type="hidden"
+                                                                       value>
+                                                                <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                       type="hidden"
+                                                                       value>
+                                                                <table style="max-width: 800px">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div style="width:50px"
+                                                                                 class="move btn btn-info btn-sm">
+                                                                                <span class="glyphicon glyphicon-sort"></span>
+                                                                            </div>
+                                                                            <div><span
+                                                                                    class="remove btn btn-danger btn-sm">Remove</span>
+                                                                            </div>
+                                                                            <div><span
+                                                                                    class="add btn btn-success btn-sm">Add new</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="form-group">
+                                                                <textarea
+                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                        class="form-control"
+                                                                        style="width: 80%"
                                                                 >
-                                                                <table><tr>
-                                                                    <td>
-                                                                        <div style="width:50px" class="move btn btn-info btn-sm">
-                                                                            <span class="glyphicon glyphicon-sort"></span>
-                                                                        </div>
-                                                                        <div><span class="remove btn btn-danger btn-sm">Remove</span>
-                                                                        </div>
-                                                                        <div><span class="add btn btn-success btn-sm">Add new</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="form-group">
+                                                                </textarea>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <th:block th:unless="${#lists.isEmpty(blogPost.getBlogPostSubParts())}">
+                                        <th:block th:each="subPart : ${blogPost.getBlogPostSubParts()}">
+                                            <div class="rhyzz-bootstrap row" style="display: block;">
+                                                <input type="hidden"
+                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][id]'}"
+                                                       th:value="${subPart.id}">
+                                                <input type="hidden"
+                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostId]'}"
+                                                       th:value="${blogPost.id}">
+                                                <input th:name="${'blogPostSubParts['+subPart.ordering+'][ordering]'}"
+                                                       type="hidden"
+                                                       th:value="${subPart.ordering}"
+                                                >
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div style="width:50px" class="move btn btn-info btn-sm">
+                                                                <span class="glyphicon glyphicon-sort"></span>
+                                                            </div>
+                                                            <span class="remove btn btn-danger btn-sm">Remove</span>
+                                                            <span class="add btn btn-success btn-sm">Add new</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][subTitle]'}"
+                                                                   class="form-control"
+                                                                   th:value="${subPart.subTitle}"
+                                                            >
+                                                            <input type="file"
+                                                                   th:name="${'blogPostSubParts['+subPart.ordering+'][image]'}"
+                                                                   class="form-control-sm"
+                                                                   th:value="${subPart.image}"
+                                                            >
+                                                            <textarea
+                                                                    th:name="${'blogPostSubParts['+subPart.ordering+'][description]'}"
+                                                                    class="form-control"
+                                                                    th:text="${subPart.description}"
+                                                            >
+                                                </textarea>
+                                                            <div class="wrapper" style="width:80%">
+                                                                <div><span class="add btn btn-success btn-sm">Add paragraph</span>
+                                                                </div>
+                                                                <div class="rhyzz-bootstrap container ui-sortable"
+                                                                     data-rf-row-count="0">
+
+                                                                    <div class="rhyzz-bootstrap template row form-group"
+                                                                         style="display: none;">
+                                                                        <input type="hidden"
+                                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
+                                                                        >
+                                                                        <input type="hidden"
+                                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
+                                                                        >
+                                                                        <input type="hidden"
+                                                                               name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                        >
+                                                                        <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][ordering]"
+                                                                               type="hidden"
+                                                                               value>
+                                                                        <table style="max-width: 800px">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div style="width:50px"
+                                                                                         class="move btn btn-info btn-sm">
+                                                                                        <span class="glyphicon glyphicon-sort"></span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span class="remove btn btn-danger btn-sm">Remove</span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span class="add btn btn-success btn-sm">Add new</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class="form-group">
+                                                                <textarea
+                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                        class="form-control"
+                                                                        style="width: 80%"
+                                                                >
+                                                                </textarea>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                    <th:block
+                                                                            th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
+                                                                        <th:block
+                                                                                th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
+                                                                            <div class="rhyzz-bootstrap row form-group"
+                                                                                 style="display: block;">
+                                                                                <input type="hidden"
+                                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][id]'}"
+                                                                                       th:value="${paragraph.id}"
+                                                                                >
+                                                                                <input type="hidden"
+                                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostSubPartId]'}"
+                                                                                       th:value="${subPart.id}"
+                                                                                >
+                                                                                <input type="hidden"
+                                                                                       th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][blogPostId]'}"
+                                                                                       th:value="${blogPost.id}"
+                                                                                >
+                                                                                <input th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][ordering]'}"
+                                                                                       type="hidden"
+                                                                                       th:value="${paragraph.ordering}"
+                                                                                >
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div style="width:50px"
+                                                                                                 class="move btn btn-info btn-sm">
+                                                                                                <span class="glyphicon glyphicon-sort"></span>
+                                                                                            </div>
+                                                                                            <div><span
+                                                                                                    class="remove btn btn-danger btn-sm">Remove</span>
+                                                                                            </div>
+                                                                                            <div><span
+                                                                                                    class="add btn btn-success btn-sm">Add new</span>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td class="form-group">
                                                                 <textarea
                                                                         th:name="${'blogPostSubParts['+subPart.ordering+'][blogPostParagraphs]['+paragraph.ordering+'][text]'}"
                                                                         class="form-control"
@@ -205,21 +235,23 @@
                                                                         th:text="${paragraph.text}"
                                                                 >
                                                                 </textarea>
-                                                                    </td>
-                                                                </tr></table>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </th:block>
+                                                                    </th:block>
+                                                                </div>
                                                             </div>
-                                                        </th:block>
-                                                    </th:block>
-                                                </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
-                                        </td>
-                                    </tr></table>
-                                </div>
+                                        </th:block>
                                     </th:block>
-                                </th:block>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                     <hr>
                     <input type="submit">
@@ -234,6 +266,7 @@
                                 });
                             });
                         });
+
                 </script>
 
                 <script type="86dc64a4e19322c20a32dff2-text/javascript">
@@ -260,6 +293,7 @@
                             }
 
                         });
+
                 </script>
             </div>
         </div>
