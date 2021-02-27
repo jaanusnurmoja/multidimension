@@ -7,10 +7,14 @@ import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,12 +27,11 @@ public class BlogFormController {
     final private BlogPostParagraphRepository paragraphRepository;
 
     @PostMapping("/data/api/blogPosts/add")
-    String create(@RequestBody(required = false) BlogPost blogPost){
+    String create(@RequestBody(required = false) BlogPost blogPost) {
         BlogPost savedBlogPost = blogPostRepository.save(blogPost);
 
-        if (blogPost.getBlogPostSubParts() != null)
-        {
-            int x = 1;
+        if (blogPost.getBlogPostSubParts() != null) {
+            int x = 0;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
                 subPart.setBlogPost(savedBlogPost);
                 subPart.setPrivateSysTitle(subPart.getPrivateSysTitle() + ": " + blogPost.getTitle().trim());
@@ -36,14 +39,14 @@ public class BlogFormController {
                 BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
 
                 if (subPart.getBlogPostParagraphs() != null) {
-                    int i = 1;
+                    int i = 0;
                     for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
                         paragraph.setBlogPostSubPart(savedSubPart);
                         paragraph.setBlogPostId(savedBlogPost.getId());
                         paragraph.setOrdering(i);
                         i++;
                         paragraphRepository.save(paragraph);
-                    };
+                    }
                 }
                 x++;
             }
@@ -51,16 +54,46 @@ public class BlogFormController {
         return savedBlogPost.getId().toString();
         //return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
+    @GetMapping("/data/api/blogPosts/{id}")
+    Optional<BlogPost> viewOne(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
+        Optional<BlogPost> blogPostGet = blogPostRepository.getByIdOrderByBlogPostSubPartsOrdering(id);
+        blogPostGet.get().setBlogPostSubParts((subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id)));
+        blogPostGet.get().getBlogPostSubParts().forEach(subPart -> {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
+        });
+        return blogPostGet;
+    }
 
+    @RequestMapping(value = "/data/api/blogPosts/{id}", method = {
+            RequestMethod.PUT,
+            RequestMethod.PATCH
+    })
+    String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
+        if (blogPost.getBlogPostSubParts().size() > 0) {
+            int i = 0;
+            for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
+                if (subPart.getBlogPost() != blogPost) subPart.setBlogPost(blogPost);
+                subPart.setPrivateSysTitle("from: " + blogPost.getTitle().trim());
 
-    @RequestMapping(
-            value = "/data/api/blogPosts/{id}",
-            method = RequestMethod.PUT)
-    String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id){
+                subPart.setOrdering(i);
+                BlogPostSubPart saved = subPartRepository.save(subPart);
+                if (subPart.getBlogPostParagraphs().size() > 0) {
+                    int x = 0;
+                    for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
+                        if (paragraph.getBlogPostSubPart() != saved) paragraph.setBlogPostSubPart(subPart);
+                        if (!paragraph.getBlogPostId().equals(blogPost.getId()))
+                            paragraph.setBlogPostId(blogPost.getId());
+                        paragraph.setOrdering(x);
+                        paragraphRepository.save(paragraph);
+                        x++;
+                    }
+                }
+                i++;
+            }
+        }
         BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         return editedBlogPost.getId().toString();
     }
-
 
 
 }

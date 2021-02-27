@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BlogPostParagraphRepository extends JpaRepository<BlogPostParagraph, Long>, JpaSpecificationExecutor<BlogPostParagraph> {
 
-    List<BlogPostParagraph> getAllByBlogPostSubPartOrderByOrdering(BlogPostSubPart subPart);
+    List<BlogPostParagraph> getAllByBlogPostSubPartIdOrderByOrdering(Long id);
 }
