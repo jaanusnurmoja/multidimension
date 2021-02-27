@@ -1,7 +1,6 @@
 package ee.net.nurmoja.multidimension.controller;
 
 import ee.net.nurmoja.multidimension.model.BlogPost;
-import ee.net.nurmoja.multidimension.model.BlogPostParagraph;
 import ee.net.nurmoja.multidimension.model.BlogPostSubPart;
 import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,10 +44,10 @@ public class PostController {
         modelAndView.setViewName("post");
         BlogPost post = service.getOne(postId);
         modelAndView.addObject("title", "Post: " + post.getTitle());
-        subPartRepository.findAllByBlogPostOrderByOrdering(post).forEach(subPart -> {
-            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart));
+        subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(post.getId()).forEach(subPart -> {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
         });
-        post.setBlogPostSubParts(subPartRepository.findAllByBlogPostOrderByOrdering(post));
+        post.setBlogPostSubParts(subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(post.getId()));
         modelAndView.addObject("post", post);
         return modelAndView;
     }
@@ -64,10 +62,11 @@ public class PostController {
     @GetMapping("/blog/{id}/edit")
     String editPostGet(@NotNull Model model, @PathVariable("id") Long id){
         BlogPost editableBlogpost = service.getOne(id);
-        subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost).forEach(subPart -> {
-            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartOrderByOrdering(subPart));
-        });
-        editableBlogpost.setBlogPostSubParts(subPartRepository.findAllByBlogPostOrderByOrdering(editableBlogpost));
+        for (BlogPostSubPart subPart : subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(editableBlogpost.getId())) {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
+        }
+        editableBlogpost.setBlogPostSubParts(subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(editableBlogpost.getId()));
+        model.addAttribute("subPartCount", editableBlogpost.getBlogPostSubParts().size() == 0 ? 1 : editableBlogpost.getBlogPostSubParts().size());
 
         model.addAttribute("blogPost", editableBlogpost);
     return "editpost";

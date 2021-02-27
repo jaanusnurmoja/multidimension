@@ -1,5 +1,6 @@
 package ee.net.nurmoja.multidimension.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class BlogPostSubPart implements Serializable {
     @Column(name = "ordering")
     private Integer ordering;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn (name = "blog_post_id")
     private BlogPost blogPost;

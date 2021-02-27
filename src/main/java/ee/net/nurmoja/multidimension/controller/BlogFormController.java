@@ -7,7 +7,14 @@ import ee.net.nurmoja.multidimension.repository.BlogPostParagraphRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostRepository;
 import ee.net.nurmoja.multidimension.repository.BlogPostSubPartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,7 +47,6 @@ public class BlogFormController {
                         i++;
                         paragraphRepository.save(paragraph);
                     }
-                    ;
                 }
                 x++;
             }
@@ -48,10 +54,17 @@ public class BlogFormController {
         return savedBlogPost.getId().toString();
         //return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
-
+    @GetMapping("/data/api/blogPosts/{id}")
+    Optional<BlogPost> viewOne(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
+        Optional<BlogPost> blogPostGet = blogPostRepository.getByIdOrderByBlogPostSubPartsOrdering(id);
+        blogPostGet.get().setBlogPostSubParts((subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id)));
+        blogPostGet.get().getBlogPostSubParts().forEach(subPart -> {
+            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
+        });
+        return blogPostGet;
+    }
 
     @RequestMapping(value = "/data/api/blogPosts/{id}", method = {
-            RequestMethod.GET,
             RequestMethod.PUT,
             RequestMethod.PATCH
     })

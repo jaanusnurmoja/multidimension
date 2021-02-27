@@ -1,5 +1,6 @@
 package ee.net.nurmoja.multidimension.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class BlogPostParagraph implements Serializable {
     @Column(name = "text")
     private String text;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "blog_post_sub_part_id")
     private BlogPostSubPart blogPostSubPart;
