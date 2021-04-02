@@ -154,7 +154,7 @@
                                                                                            name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
                                                                                     >
                                                                                     <input type="hidden"
-                                                                                           name="$blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
                                                                                     >
                                                                                     <table style="max-width: 800px">
                                                                                         <tr>
@@ -272,7 +272,7 @@
                             document.getElementById('results_display').innerHTML = "Submitted form data: " + jsonData;
                            $.ajax({
                                 url: '/multidimension/data/api/blogPosts/' + data.id,
-                                type: 'PUT',
+                                type: 'PATCH',
                                 data: jsonData,
                                 success: function(result) {
                                     $(location).attr('href', '/multidimension/blog/' + data.id);
