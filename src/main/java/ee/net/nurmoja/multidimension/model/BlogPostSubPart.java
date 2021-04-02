@@ -45,4 +45,18 @@ public class BlogPostSubPart implements Serializable {
     public void setPrivateSysTitle() {
         this.privateSysTitle = "Artiklist";
     }
+
+    public BlogPostParagraph addBlogPostParagraph(BlogPostParagraph blogPostParagraph) {
+        getBlogPostParagraphs().add(blogPostParagraph);
+        blogPostParagraph.setBlogPostSubPart(this);
+
+        return blogPostParagraph;
+    }
+
+    public BlogPostParagraph removeBlogPostParagraph(BlogPostParagraph blogPostParagraph) {
+        getBlogPostParagraphs().remove(blogPostParagraph);
+        blogPostParagraph.setBlogPostSubPart(null);
+
+        return blogPostParagraph;
+    }
 }

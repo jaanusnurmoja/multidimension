@@ -24,4 +24,19 @@ public class BlogPost {
     @OneToMany(mappedBy = "blogPost")
     private List<BlogPostSubPart> blogPostSubParts;
 
+        public BlogPostSubPart addBlogPostSubPart(BlogPostSubPart blogPostSubPart) {
+        getBlogPostSubParts().add(blogPostSubPart);
+        blogPostSubPart.setBlogPost(this);
+
+        return blogPostSubPart;
+    }
+
+    public BlogPostSubPart removeBlogPostSubPart(BlogPostSubPart blogPostSubPart) {
+        getBlogPostSubParts().remove(blogPostSubPart);
+        blogPostSubPart.setBlogPost(null);
+
+        return blogPostSubPart;
+    }
+
+
 }
