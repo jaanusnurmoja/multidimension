@@ -55,21 +55,28 @@ public class BlogFormController {
         //return new RedirectView("/multidimension/blog/" + savedBlogPost.getId());
     }
     @GetMapping("/data/api/blogPosts/{id}")
-    Optional<BlogPost> viewOne(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
-        Optional<BlogPost> blogPostGet = blogPostRepository.getByIdOrderByBlogPostSubPartsOrdering(id);
-        blogPostGet.get().setBlogPostSubParts((subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id)));
-        blogPostGet.get().getBlogPostSubParts().forEach(subPart -> {
-            subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
-        });
-        return blogPostGet;
+    BlogPost viewOne(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
+
+        if (blogPostRepository.getByIdOrderByBlogPostSubPartsOrdering(id).isPresent()) {
+            blogPost = blogPostRepository.getByIdOrderByBlogPostSubPartsOrdering(id).get();
+            blogPost.setBlogPostSubParts((subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id)));
+            blogPost.getBlogPostSubParts().forEach(subPart -> {
+                subPart.setBlogPostParagraphs(paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()));
+            });
+        }
+        else {
+            blogPost = new BlogPost();
+        }
+        return blogPost;
     }
 
     @RequestMapping(value = "/data/api/blogPosts/{id}", method = {
             RequestMethod.PUT,
-            RequestMethod.PATCH
+            RequestMethod.PATCH,
+            RequestMethod.POST
+
     })
     String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
-        BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         if (blogPost.getBlogPostSubParts() != null) {
             int i = 0;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
@@ -82,12 +89,12 @@ public class BlogFormController {
                     subPart = subPartRepository.save(subPart);
                 }
 */
-                subPart = subPartRepository.save(subPart);
+                BlogPostSubPart savedSubPart = subPartRepository.save(subPart);
 
                 if (subPart.getBlogPostParagraphs() != null) {
                     int x = 0;
                     for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
-                        paragraph.setBlogPostSubPart(subPart);
+                        paragraph.setBlogPostSubPart(savedSubPart);
                         paragraph.setBlogPostId(id);
                         paragraph.setOrdering(x);
 /*
@@ -104,6 +111,7 @@ public class BlogFormController {
                 i++;
             }
         }
+        BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         return editedBlogPost.getId().toString();
     }
 

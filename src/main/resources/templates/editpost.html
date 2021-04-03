@@ -145,18 +145,14 @@
                                                                         th:with="cnt=${subPart.getBlogPostParagraphs() == null ? 0 : subPart.getBlogPostParagraphs().size()}">
                                                                     <div class="rhyzz-bootstrap container ui-sortable"
                                                                          th:data-rf-row-count="${cnt}">
-                                                                                <div  th:each="paragraph : ${subPart.getBlogPostParagraphs()}" class="rhyzz-bootstrap template row form-group subpartexists"
+                                                                                <div class="rhyzz-bootstrap template row form-group"
                                                                                      style="display: none;">
                                                                                     <input type="hidden"
-                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][id]'}"
-                                                                                           value=""
-                                                                                    >
-                                                                                    <input type="hidden"
-                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][blogPostSubPartId]'}"
+                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]'}"
                                                                                            th:value="${subPart.id}"
                                                                                     >
                                                                                     <input type="hidden"
-                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][blogPostId]'}"
+                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs][{{row-nr}}][blogPostId]'}"
                                                                                            th:value="${blogPost.id}"
                                                                                     >
                                                                                     <table style="max-width: 800px">
@@ -175,7 +171,7 @@
                                                                                             </td>
                                                                                             <td class="form-group">
                                                                                                 <textarea
-                                                                                                        th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][text]'}"
+                                                                                                        th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs][{{row-nr}}][text]'}"
                                                                                                         class="form-control"
                                                                                                         style="width: 80%"
                                                                                                 >
