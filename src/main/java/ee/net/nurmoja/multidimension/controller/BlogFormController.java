@@ -69,21 +69,34 @@ public class BlogFormController {
             RequestMethod.PATCH
     })
     String edit(@RequestBody(required = false) BlogPost blogPost, @PathVariable("id") Long id) {
-        if (blogPost.getBlogPostSubParts().size() > 0) {
+        BlogPost editedBlogPost = blogPostRepository.save(blogPost);
+        if (blogPost.getBlogPostSubParts() != null) {
             int i = 0;
             for (BlogPostSubPart subPart : blogPost.getBlogPostSubParts()) {
-                if (subPart.getBlogPost() != blogPost) subPart.setBlogPost(blogPost);
+                subPart.setBlogPost(blogPost);
                 subPart.setPrivateSysTitle("from: " + blogPost.getTitle().trim());
-
                 subPart.setOrdering(i);
-                BlogPostSubPart saved = subPartRepository.save(subPart);
-                if (subPart.getBlogPostParagraphs().size() > 0) {
+/*
+                if (!subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id).contains(subPart)
+                || subPartRepository.findAllByBlogPostIdOrderByOrderingAsc(id).isEmpty()) {
+                    subPart = subPartRepository.save(subPart);
+                }
+*/
+                subPart = subPartRepository.save(subPart);
+
+                if (subPart.getBlogPostParagraphs() != null) {
                     int x = 0;
                     for (BlogPostParagraph paragraph : subPart.getBlogPostParagraphs()) {
-                        if (paragraph.getBlogPostSubPart() != saved) paragraph.setBlogPostSubPart(subPart);
-                        if (!paragraph.getBlogPostId().equals(blogPost.getId()))
-                            paragraph.setBlogPostId(blogPost.getId());
+                        paragraph.setBlogPostSubPart(subPart);
+                        paragraph.setBlogPostId(id);
                         paragraph.setOrdering(x);
+/*
+                        if (!paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId())
+                        .contains(paragraph) ||
+                                paragraphRepository.getAllByBlogPostSubPartIdOrderByOrdering(subPart.getId()).isEmpty()) {
+                            paragraphRepository.save(paragraph);
+                        }
+*/
                         paragraphRepository.save(paragraph);
                         x++;
                     }
@@ -91,7 +104,6 @@ public class BlogFormController {
                 i++;
             }
         }
-        BlogPost editedBlogPost = blogPostRepository.save(blogPost);
         return editedBlogPost.getId().toString();
     }
 

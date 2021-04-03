@@ -58,13 +58,13 @@
                                                                 class="add btn btn-success btn-sm">Add paragraph</span>
                                                         </div>
                                                         <div class="rhyzz-bootstrap container ui-sortable"
-                                                             data-rf-row-count="1">
+                                                             data-rf-row-count=1>
 
                                                             <div class="rhyzz-bootstrap template row form-group"
                                                                  style="display: none;">
                                                                 <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
                                                                        type="hidden"
-                                                                       value>
+                                                                       value="">
                                                                 <input name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
                                                                        type="hidden"
                                                                        value>
@@ -142,19 +142,22 @@
                                                                 <div><span class="add btn btn-success btn-sm">Add paragraph</span>
                                                                 </div>
                                                                 <th:block
-                                                                        th:with="cnt=${subPart.getBlogPostParagraphs().size()}">
+                                                                        th:with="cnt=${subPart.getBlogPostParagraphs() == null ? 0 : subPart.getBlogPostParagraphs().size()}">
                                                                     <div class="rhyzz-bootstrap container ui-sortable"
                                                                          th:data-rf-row-count="${cnt}">
-                                                                                <div class="rhyzz-bootstrap template row form-group"
+                                                                                <div  th:each="paragraph : ${subPart.getBlogPostParagraphs()}" class="rhyzz-bootstrap template row form-group subpartexists"
                                                                                      style="display: none;">
                                                                                     <input type="hidden"
-                                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][id]"
+                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][id]'}"
+                                                                                           value=""
                                                                                     >
                                                                                     <input type="hidden"
-                                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostSubPartId]"
+                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][blogPostSubPartId]'}"
+                                                                                           th:value="${subPart.id}"
                                                                                     >
                                                                                     <input type="hidden"
-                                                                                           name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][blogPostId]"
+                                                                                           th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][blogPostId]'}"
+                                                                                           th:value="${blogPost.id}"
                                                                                     >
                                                                                     <table style="max-width: 800px">
                                                                                         <tr>
@@ -172,7 +175,7 @@
                                                                                             </td>
                                                                                             <td class="form-group">
                                                                                                 <textarea
-                                                                                                        name="blogPostSubParts[{{row-nr}}][blogPostParagraphs][{{row-nr}}][text]"
+                                                                                                        th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][text]'}"
                                                                                                         class="form-control"
                                                                                                         style="width: 80%"
                                                                                                 >
@@ -183,10 +186,8 @@
                                                                                 </div>
                                                                         <th:block
                                                                                 th:unless="${#lists.isEmpty(subPart.getBlogPostParagraphs())}">
-                                                                            <th:block
-                                                                                    th:each="paragraph : ${subPart.getBlogPostParagraphs()}">
 
-                                                                            <div class="rhyzz-bootstrap row form-group"
+                                                                            <div th:each="paragraph : ${subPart.getBlogPostParagraphs()}" class="rhyzz-bootstrap row form-group"
                                                                                      style="display: block;">
                                                                                     <input type="hidden"
                                                                                            th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][id]'}"
@@ -215,18 +216,17 @@
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td class="form-group">
-                                                                <textarea
-                                                                        th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][text]'}"
-                                                                        class="form-control"
-                                                                        style="width: 80%"
-                                                                        th:text="${paragraph.text}"
-                                                                >
-                                                                </textarea>
+                                                                                                <textarea
+                                                                                                        th:name="${'blogPostSubParts['+subPartStat.index+'][blogPostParagraphs]['+paragraphStat.index+'][text]'}"
+                                                                                                        class="form-control"
+                                                                                                        style="width: 80%"
+                                                                                                        th:text="${paragraph.text}"
+                                                                                                >
+                                                                                                </textarea>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </div>
-                                                                            </th:block>
                                                                         </th:block>
                                                                     </div>
                                                                 </th:block>
@@ -276,6 +276,7 @@
                                 data: jsonData,
                                 success: function(result) {
                                     $(location).attr('href', '/multidimension/blog/' + data.id);
+                                    console.log(jsonData);
                                 }
                             });
                             if (status != "success") {
